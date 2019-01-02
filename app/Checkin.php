@@ -14,11 +14,11 @@ class Checkin extends Model
         return $this->belongsTo(Child::class);
     }
 
-    public function today()
+    public function today($child)
     {
-        // dd(Carbon::today());
-        dd($this->created_at == Carbon::today());
-        dd($this::whereDate('created_at', Carbon::today()));
-        return $this->where('created_at', Carbon::now()->toTimeString());
+        $today = Checkin::where('user_id', $child->id)
+            ->whereDate('created_at', Carbon::today());
+        
+        return $today;
     }
 }

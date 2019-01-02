@@ -27,18 +27,30 @@
                 </thead>
                 <tbody>
                     @if($children->count() > 0)
-                    <tr>
-                        @foreach($children as $child)
+                    @foreach($children as $child)
+                        <tr>
                            <td>
                                <a  href="{{ route('children.show', $child->id) }}">{{ $child->first_name }} {{ $child->last_name }}</a>
                             </td>
-                            @foreach($child->checkins()->get() as $day)
+                            @foreach($child->today_checkin as $day)
                                 <td>
-                                    {{ $day }}
+                                    <input type="checkbox" name="" id="" {{ $day->am_checkin ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="" id="" {{ $day->pm_checkin ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    @if($day->pm_checkout_time)
+                                        {{ $day->pm_checkout_time }}
+                                    @elseif($day->pm_checkin)
+                                        <strong>Student still in latchkey</strong>
+                                    @else
+                                        <strong>Student not in afternoon latchkey</strong>
+                                    @endif
                                 </td>
                             @endforeach
+                        </tr>
                         @endforeach
-                    </tr>
                     @else
                     <tr class="text-center">
                         <td>No Children</td>

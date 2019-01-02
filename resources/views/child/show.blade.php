@@ -14,15 +14,20 @@
             </form>
         </div>
         <div>
+            @if($errors->has('today_checkins'))
+                {{ $errors->first('today_checkins') }}
+            @endif
             @foreach($child->checkins()->get() as $day)
-                {{ $day->am_checkin }} {{ $day->pm_checkin }} {{ $day->pm_checkout }}
+            <div>
+                {{ $day->created_at->format('F  d, Y') }} {{ $day->am_checkin }} {{ $day->pm_checkin }} {{ $day->pm_checkout }}
+            </div>
             @endforeach
         </div>
-        @if($child->checkins()->first()->today())
-            <form action="/add-day/{{ $child->id }}" method="post">
-                @csrf
-                <button type="submit">Add Day</button>
-            </form>
-        @endif
+            @if($child->today->count() == 0)
+                <form action="/add-day/{{ $child->id }}" method="post">
+                    @csrf
+                    <button type="submit">Add Day</button>
+                </form>
+            @endif
     </div>
 @endsection

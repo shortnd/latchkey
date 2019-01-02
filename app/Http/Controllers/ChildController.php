@@ -16,9 +16,11 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $dt = Carbon::now()->toDateString();
         $children = Child::get();
-        // dd(Child::get()->first()->checkins()->where('created_at', $dt)->get());
+
+        $children->each(function($item, $key) {
+            $item['today_checkin'] = Checkin::whereDate('created_at', Carbon::today())->where('child_id', $item->id)->get();
+        });
         return view('child.index')->withChildren($children);
     }
 
@@ -40,12 +42,14 @@ class ChildController extends Controller
      */
     public function store(Request $request)
     {
-        Child::create($this->validate($request, [
+        $child = Child::create($this->validate($request, [
             'first_name' => 'required|max:225',
             'last_name' => 'required|max:225'
         ]));
 
-        return back();
+        $child->addCheckin($child);
+
+        return redirect('/children');
     }
 
     /**
@@ -56,6 +60,8 @@ class ChildController extends Controller
      */
     public function show(Child $child)
     {
+        $child['today'] = $child->checkins()->whereDate('created_at', Carbon::today())->get();
+
         return view('child.show')->withChild($child);
     }
 
