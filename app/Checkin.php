@@ -21,4 +21,9 @@ class Checkin extends Model
         
         return $today;
     }
+
+    public function getCheckoutTime()
+    {
+        // return Carbon::createFromFormat('HH: MM', $this->pm_checkout_time)->toDateTimeString();
+    }
 }

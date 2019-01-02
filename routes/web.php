@@ -20,3 +20,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('children', 'ChildController');
 Route::post('add-day/{child}', 'ChildCheckinController@addNewCheckins');
+Route::patch('am-checkin/{child}', 'ChildCheckinController@am_checkin')->name('am_checkin');
+Route::patch('pm-checkin/{child}', 'ChildCheckinController@pm_checkin')->name('pm_checkin');
+Route::patch('pm-checkout/{child}', 'ChildCheckinController@pm_checkout')->name('pm_checkout');

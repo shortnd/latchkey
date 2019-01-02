@@ -34,16 +34,36 @@
                             </td>
                             @foreach($child->today_checkin as $day)
                                 <td>
-                                    <input type="checkbox" name="" id="" {{ $day->am_checkin ? 'checked' : '' }}>
+                                    <form action="{{ route('am_checkin', $child->id) }}" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <label for="am_checkin">Check In &nbsp;
+                                            <input type="checkbox" name="am_checkin" {{ $day->am_checkin ? 'checked' : '' }} onchange="this.form.submit()">
+                                        </label>
+                                    </form>
                                 </td>
                                 <td>
-                                    <input type="checkbox" name="" id="" {{ $day->pm_checkin ? 'checked' : '' }}>
+                                    <form action="{{ route('pm_checkin', $child->id) }}" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <label for="pm_checkin">Check in &nbsp;
+                                            <input type="checkbox" name="pm_checkin" id="pm_checkin" {{ $day->pm_checkin ? 'checked' : '' }} onchange="this.form.submit()">
+                                        </label>
+                                    </form>
                                 </td>
                                 <td>
                                     @if($day->pm_checkout_time)
                                         {{ $day->pm_checkout_time }}
                                     @elseif($day->pm_checkin)
                                         <strong>Student still in latchkey</strong>
+                                        <form action="{{ route('pm_checkout', $child->id) }}" method="post">
+                                            @csrf
+                                            @method('PATCH')
+                                            <label for="pm_checkout">
+                                                Checkout &nbsp;
+                                                <input type="checkbox" name="pm_checkout" id="pm_checkout" {{ $day->pm_checkout ? 'checked' : '' }} onchange="this.form.submit()">
+                                            </label>
+                                        </form>
                                     @else
                                         <strong>Student not in afternoon latchkey</strong>
                                     @endif
