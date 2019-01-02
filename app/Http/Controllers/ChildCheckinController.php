@@ -17,21 +17,22 @@ class ChildCheckinController extends Controller
 
     public function am_checkin(Child $child, Request $request)
     {
-        $am_checkin = $child->checkins()->whereDate('created_at', Carbon::today())->first();
+        $am_checkin = $child->todaysCheckin();
         $am_checkin->update([ 'am_checkin' => $request->has(['am_checkin'])]);
         return back();
     }
 
     public function pm_checkin(Child $child, Request $request)
     {
-        $pm_checkin = $child->checkins()->whereDate('created_at', Carbon::today())->first();
+        $pm_checkin = $child->todaysCheckin();
         $pm_checkin->update(['pm_checkin' => $request->has(['pm_checkin'])]);
         return back();
     }
 
     public function pm_checkout(Child $child, Request $request)
     {
-        $pm_checkout = $child->checkins()->whereDate('created_at', Carbon::today())->first();
+        $pm_checkout = $child->todaysCheckin();
+
         if ($request->has('pm_checkout')) {
             $pm_checkout->update(['pm_checkout_time' => Carbon::now()]);
         } else {

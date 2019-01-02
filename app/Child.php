@@ -10,23 +10,19 @@ class Child extends Model
 {
     protected $guarded = [];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        // static::create(function () {
-
-        // });
-    }
-
     public function checkins()
     {
         return $this->hasMany(Checkin::class);
     }
 
+    public function todaysCheckin()
+    {
+        return $this->checkins()->whereDate('created_at', Carbon::today())->first();
+    }
+
     public function addCheckin($child)
     {
-        if (!$this->checkins()->whereDate('created_at', Carbon::today())->get()) {
+        if (!$this->todaysCheckin()) {
             return $errors['today_checkins'] = 'Already has checkin today.';
         } else {
             return $this->checkins()->create([
