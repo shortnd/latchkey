@@ -18,6 +18,8 @@ class CreateCheckinsTable extends Migration
             $table->unsignedInteger('child_id');
             $table->boolean('am_checkin')->default(0);
             $table->boolean('pm_checkin')->default(0);
+            $table->dateTime('am_checkin_time')->nullable();
+            $table->dateTime('pm_checkin_time')->nullable();
             $table->dateTime('pm_checkout_time')->nullable();
             $table->timestamps();
         });

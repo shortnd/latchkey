@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Child;
-use App\Checkin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -18,14 +17,16 @@ class ChildCheckinController extends Controller
     public function am_checkin(Child $child, Request $request)
     {
         $am_checkin = $child->todaysCheckin();
-        $am_checkin->update([ 'am_checkin' => $request->has(['am_checkin'])]);
+        $am_checkin->update([ 'am_checkin' => $request->has(['am_checkin']), 'am_checkin_time' => Carbon::now()]);
+
         return back();
     }
 
     public function pm_checkin(Child $child, Request $request)
     {
         $pm_checkin = $child->todaysCheckin();
-        $pm_checkin->update(['pm_checkin' => $request->has(['pm_checkin'])]);
+        $time = Carbon::createFromTime(15, 0, 0);
+        $pm_checkin->update(['pm_checkin' => $request->has(['pm_checkin']), 'pm_checkin_time' => $time]);
         return back();
     }
 
