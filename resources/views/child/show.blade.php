@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row flex-column">
-            <h2>{{ $child->first_name }}</h2>
+            <h2>{{ $child->fullName() }} </h2>
             <form action="{{ route('children.destroy', $child->id) }}" method="post">
                 @csrf
                 @method('DELETE')
