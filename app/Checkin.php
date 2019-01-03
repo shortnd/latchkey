@@ -22,19 +22,10 @@ class Checkin extends Model
         return $today;
     }
 
-    public function morningDisable()
+    public function disabled()
     {
         $time = Carbon::now()->format('H');
-        if ($time < 8) {
-            return false;
-        }
-        return true;
-    }
-
-    public function afternoonDisable()
-    {
-        $time = Carbon::now()->format('H');
-        if ($time > 15) {
+        if ($time < 8 || $time > 15) {
             return false;
         }
         return true;

@@ -40,7 +40,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <label for="am_checkin">Check In &nbsp;
-                                                <input type="checkbox" name="am_checkin" {{ $day->am_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $day->morningDisable() ? 'disabled' : '' }}>
+                                                <input type="checkbox" name="am_checkin" {{ $day->am_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $day->disabled() ? 'disabled' : '' }}>
                                             </label>
                                         </form>
                                         @else
@@ -52,7 +52,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <label for="pm_checkin">Check in &nbsp;
-                                                <input type="checkbox" name="pm_checkin" id="pm_checkin" {{ $day->pm_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $day->afternoonDisable() ? 'disabled' : '' }}>
+                                                <input type="checkbox" name="pm_checkin" id="pm_checkin" {{ $day->pm_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $day->disabled() ? 'disabled' : '' }}>
                                             </label>
                                         </form>
                                     </td>
