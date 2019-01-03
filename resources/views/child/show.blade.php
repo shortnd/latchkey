@@ -59,6 +59,8 @@
                     <thead>
                         <th scope="col">Day of Week</th>
                         <th scope="col">Am Checkin</th>
+                        <th scope="col">Pm Checkin</th>
+                        <th scope="col">Pm Checkout</th>
                     </thead>
                     <tbody>
                         @foreach($child->pastWeeksCheckin() as $day)
@@ -67,15 +69,23 @@
                                     {{ $day->created_at->format('D d') }}
                                 </td>
                                 <td>
-                                    {{ $day->am_checkin ? 'Was Checked In' : 'Wasn\'t Checked in' }}
+                                    {{ $day->am_checkin ? 'Was Checked In at '.$day->amCheckinTime() : 'Wasn\'t Checked in' }}
                                 </td>
                                 <td>
-                                    {{ $day->pm_checkin ? 'Was Checked in at' . $day->pm_checkin_time : 'Wasn\'t Checked in' }}
+                                    {{ $day->pm_checkin ? 'Was Checked in at ' . $day->pmCheckinTime() : 'Wasn\'t Checked in' }}
+                                </td>
+                                <td>
+                                    @if($day->pm_checkout_time)
+                                        Checked out at {{ $day->getCheckoutTime() }}
+                                    @elseif($day->pm_checkin)
+                                        <strong>Student still in latchkey</strong>
+                                    @else
+                                        <strong>Student not in afternoon latchkey</strong>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
-                    {!! $child->pastWeeksCheckin() !!}
                 </table>
             </div>
         </div>

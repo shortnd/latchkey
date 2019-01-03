@@ -26,12 +26,7 @@ class Child extends Model
         $weekStart = $now->startOfWeek()->format('Y-m-d H:i');
         $weekEnd = $now->endOfWeek()->format('Y-m-d H:i');
 
-        return $this->checkins()->whereBetween('created_at', [$weekStart, $weekEnd])->get();
-    }
-
-    public function amCheckinTime()
-    {
-        return Carbon::parse($this->am_checkin_time)->format('h:i a');
+        return $this->checkins()->whereBetween('created_at', [$weekStart, $weekEnd])->orderBy('created_at', 'desc')->get();
     }
 
     public function addCheckin($child)

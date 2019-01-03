@@ -22,8 +22,18 @@ class Checkin extends Model
         return $today;
     }
 
+    public function pmCheckinTime()
+    {
+        return Carbon::parse($this->pm_checkin_time)->format('h:i a');
+    }
+
     public function getCheckoutTime()
     {
-        // return Carbon::createFromFormat('HH: MM', $this->pm_checkout_time)->toDateTimeString();
+        return Carbon::parse($this->pm_checkout_time)->format('h:i a');
+    }
+
+    public function amCheckinTime()
+    {
+        return Carbon::parse($this->am_checkin_time)->format('h:i a');
     }
 }
