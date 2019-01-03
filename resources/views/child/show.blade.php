@@ -21,7 +21,7 @@
             @if($child->todaysCheckin())
             <div class="card mb-3">
                 <div class="card-header">
-                    {{ \Carbon\Carbon::today()->format('F d Y') }} - Current Day
+                    {{ today()->format('F d Y') }} - Current Day
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -55,38 +55,40 @@
                 <div class="card-header">
                     Past Week
                 </div>
-                <table class="table">
-                    <thead>
-                        <th scope="col">Day of Week</th>
-                        <th scope="col">Am Checkin</th>
-                        <th scope="col">Pm Checkin</th>
-                        <th scope="col">Pm Checkout</th>
-                    </thead>
-                    <tbody>
-                        @foreach($child->pastWeeksCheckin() as $day)
-                            <tr>
-                                <td>
-                                    {{ $day->created_at->format('D d') }}
-                                </td>
-                                <td>
-                                    {{ $day->am_checkin ? 'Was Checked In at '.$day->amCheckinTime() : 'Wasn\'t Checked in' }}
-                                </td>
-                                <td>
-                                    {{ $day->pm_checkin ? 'Was Checked in at ' . $day->pmCheckinTime() : 'Wasn\'t Checked in' }}
-                                </td>
-                                <td>
-                                    @if($day->pm_checkout_time)
-                                        Checked out at {{ $day->getCheckoutTime() }}
-                                    @elseif($day->pm_checkin)
-                                        <strong>Student still in latchkey</strong>
-                                    @else
-                                        <strong>Student not in afternoon latchkey</strong>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <th scope="col">Day of Week</th>
+                            <th scope="col">Am Checkin</th>
+                            <th scope="col">Pm Checkin</th>
+                            <th scope="col">Pm Checkout</th>
+                        </thead>
+                        <tbody class="py-3">
+                            @foreach($child->pastWeeksCheckin() as $day)
+                                <tr>
+                                    <td>
+                                        {{ $day->created_at->format('D d') }}
+                                    </td>
+                                    <td>
+                                        {{ $day->am_checkin ? 'Was Checked In at '.$day->amCheckinTime() : 'Wasn\'t Checked in' }}
+                                    </td>
+                                    <td>
+                                        {{ $day->pm_checkin ? 'Was Checked in at ' . $day->pmCheckinTime() : 'Wasn\'t Checked in' }}
+                                    </td>
+                                    <td>
+                                        @if($day->pm_checkout_time)
+                                            Checked out at {{ $day->getCheckoutTime() }}
+                                        @elseif($day->pm_checkin)
+                                            <strong>Student still in latchkey</strong>
+                                        @else
+                                            <strong>Student not in afternoon latchkey</strong>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         @if($child->today->count() == 0)

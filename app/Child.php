@@ -22,7 +22,16 @@ class Child extends Model
 
     public function todaysCheckin()
     {
-        return $this->checkins()->whereDate('created_at', Carbon::today())->first();
+        return $this->checkins()->whereDate('created_at', today())->first();
+    }
+
+    public function disable($time)
+    {
+        $time = Carbon::now()->format('H');
+        if ($time < 8) {
+
+        }
+
     }
 
     public function pastWeeksCheckin()
