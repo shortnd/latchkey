@@ -73,7 +73,7 @@ class ChildController extends Controller
      */
     public function edit(Child $child)
     {
-        //
+        return view('child.edit')->withChild($child);
     }
 
     /**
@@ -85,7 +85,12 @@ class ChildController extends Controller
      */
     public function update(Request $request, Child $child)
     {
-        //
+        $child->update($this->validate($request, [
+            'first_name' => 'required|max:225',
+            'last_name' => 'required|max:225'
+        ]));
+
+        return back();
     }
 
     /**
