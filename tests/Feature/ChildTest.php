@@ -27,4 +27,17 @@ class ChildTest extends TestCase
 
         $this->get('/children')->assertSee($child['first_name']);
     }
+
+    /** @test */
+    public function has_error_when_no_first_name_is_given()
+    {
+        $child = [
+            'last_name' => $this->faker->lastName
+        ];
+
+        $response = $this->post('/children', $child);
+
+        $response->assertSessionHasErrors();
+    }
+
 }
