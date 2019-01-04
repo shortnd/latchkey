@@ -44,7 +44,7 @@
                                             </label>
                                         </form>
                                         @else
-                                            Checked in at {{ $child->amCheckinTime() }}
+                                            Checked in at {{ $day->amCheckinTime() }}
                                         @endif
                                     </td>
                                     <td>

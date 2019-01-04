@@ -10,8 +10,7 @@ class ChildCheckinController extends Controller
 {
     public function addNewCheckins(Child $child, Request $request)
     {
-        $child->addCheckin($child);
-        return back();
+        return $child->addCheckin($child);
     }
 
     public function am_checkin(Child $child, Request $request)

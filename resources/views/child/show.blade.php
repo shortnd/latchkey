@@ -11,6 +11,7 @@
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </div>
             </form>
+            <a href="{{ route('children.edit', $child->id) }}" class="btn btn-secondary mb-3">Edit</a>
         </div>
         <div>
             @if($errors->has('today_checkins'))
