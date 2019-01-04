@@ -25,6 +25,16 @@ class Child extends Model
         return $this->checkins()->whereDate('created_at', today())->first();
     }
 
+    public function checkin_totals()
+    {
+        return $this->hasMany('App\CheckinTotals');
+    }
+
+    public function checkin_weekly_totals()
+    {
+        return $this->hasManyThrough('App\CheckinWeeklyTotals', 'App\CheckinTotals');
+    }
+
     public function disable($time)
     {
         $time = Carbon::now()->format('H');
