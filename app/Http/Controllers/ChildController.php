@@ -18,9 +18,13 @@ class ChildController extends Controller
     {
         $children = Child::get();
 
-        $children->each(function($item, $key) {
-            $item['today_checkin'] = Checkin::whereDate('created_at', today())->where('child_id', $item->id)->get();
+        // $children->each(function($item, $key) {
+        //     $item['today_checkin'] = Checkin::whereDate('created_at', today())->where('child_id', $item->id)->get();
+        // });
+        $children->map(function($child) {
+            $child->today_checkin = $child->checkins()->where('child_id', $child->id)->whereDate('created_at', today())->first();
         });
+
         return view('child.index')->withChildren($children);
     }
 
@@ -60,7 +64,16 @@ class ChildController extends Controller
      */
     public function show(Child $child)
     {
-        $child['today'] = $child->checkins()->whereDate('created_at', today())->get();
+        $child->today = $child->checkins()->whereDate('created_at', today())->get();
+        if (request('sort') == 'desc') {
+            $child->weekly = $child->checkins()->get()->groupBy(function($day) {
+                return Carbon::parse($day->created_at)->format('W');
+            })->reverse();
+        } else {
+            $child->weekly = $child->checkins()->get()->groupBy(function($day) {
+                return Carbon::parse($day->created_at)->format('W');
+            });
+        }
 
         return view('child.show')->withChild($child);
     }

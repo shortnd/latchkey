@@ -35,13 +35,15 @@ class Child extends Model
         return $this->hasManyThrough('App\CheckinWeeklyTotals', 'App\CheckinTotals');
     }
 
-    public function disable($time)
+    public function weeklyCheckins()
     {
-        $time = Carbon::now()->format('H');
-        if ($time < 8) {
+        $now = Carbon::now();
+        $monthStart = $now->startOfMonth()->format('Y-m-d H:i');
+        $monthEnd = $now->endOfMonth()->format('Y-m-d H:i');
 
-        }
-
+        return $this->checkins()->whereBetween('created_at', [$monthStart, $monthEnd])->orderBy('created_at', 'asc')->get()->groupBy(function($date) {
+            return Carbon::parse($date->created_at)->format('W');
+        });
     }
 
     public function pastWeeksCheckin()

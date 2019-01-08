@@ -17,15 +17,24 @@ class Checkin extends Model
     public function today($child)
     {
         $today = Checkin::where('user_id', $child->id)
-                        ->whereDate('created_at', Carbon::today());
+                        ->whereDate('created_at', today());
 
         return $today;
     }
 
-    public function disabled()
+    public function am_disabled()
     {
         $time = Carbon::now()->format('H');
-        if ($time < 8 || $time > 15) {
+        if ($time > 5 && $time < 8) {
+            return false;
+        }
+        return true;
+    }
+
+    public function pm_disabled()
+    {
+        $time = Carbon::now()->format('H');
+        if ($time > 15 && $time < 17) {
             return false;
         }
         return true;
@@ -39,6 +48,11 @@ class Checkin extends Model
     public function getCheckoutTime()
     {
         return Carbon::parse($this->pm_checkout_time)->format('h:i a');
+    }
+
+    public function getCheckoutDiffHumans()
+    {
+        return Carbon::parse($this->pm_checkout_time)->diffForHumans();
     }
 
     public function amCheckinTime()

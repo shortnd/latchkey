@@ -27,59 +27,63 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if($children->count() > 0)
-                        @foreach($children as $child)
+                        @if($children)
+                            @foreach($children as $child)
                             <tr>
-                               <td>
-                                   <a  href="{{ route('children.show', $child->id) }}">{{ $child->first_name }} {{ $child->last_name }}</a>
+                                <td>
+                                    <a  href="{{ route('children.show', $child->id) }}?sort=asc">{{ $child->first_name }} {{ $child->last_name }}</a>
                                 </td>
-                                @foreach($child->today_checkin as $day)
-                                    <td>
-                                        @if(!$day->am_checkin)
-                                        <form action="{{ route('am_checkin', $child->id) }}" method="post">
+                                <td>
+                                    @if(!$child->today_checkin->am_checkin)
+                                    <form action="{{ route('am_checkin', $child->id) }}" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <label for="am_checkin">Check In &nbsp;
+                                            <input type="checkbox" name="am_checkin" {{ $child->today_checkin->am_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $child->today_checkin->am_disabled() ? 'disabled' : '' }}>
+                                        </label>
+                                    </form>
+                                    @else
+                                        Checked in at {{ $child->today_checkin->amCheckinTime() }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($child->today_checkin->pm_checkin)
+                                    Checked in today
+                                    @else
+                                    <form action="{{ route('pm_checkin', $child->id) }}" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <label for="pm_checkin">Check in &nbsp;
+                                            <input type="checkbox" name="pm_checkin" id="pm_checkin" {{ $child->today_checkin->pm_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $child->today_checkin->pm_disabled() ? 'disabled' : '' }}>
+                                        </label>
+                                    </form>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($child->today_checkin->pm_checkout_time)
+                                        {{ $child->today_checkin->getCheckoutTime() }}
+                                        <br>
+                                        {{ $child->today_checkin->getCheckoutDiffHumans() }}
+                                    @elseif($child->today_checkin->pm_checkin)
+                                        <strong>Student still in latchkey</strong>
+                                        <form action="{{ route('pm_checkout', $child->id) }}" method="post">
                                             @csrf
                                             @method('PATCH')
-                                            <label for="am_checkin">Check In &nbsp;
-                                                <input type="checkbox" name="am_checkin" {{ $day->am_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $day->disabled() ? 'disabled' : '' }}>
+                                            <label for="pm_checkout">
+                                                Checkout &nbsp;
+                                                <input type="checkbox" name="pm_checkout" id="pm_checkout" {{ $child->today_checkin->pm_checkout ? 'checked' : '' }} onchange="this.form.submit()">
                                             </label>
                                         </form>
-                                        @else
-                                            Checked in at {{ $day->amCheckinTime() }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <form action="{{ route('pm_checkin', $child->id) }}" method="post">
-                                            @csrf
-                                            @method('PATCH')
-                                            <label for="pm_checkin">Check in &nbsp;
-                                                <input type="checkbox" name="pm_checkin" id="pm_checkin" {{ $day->pm_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $day->disabled() ? 'disabled' : '' }}>
-                                            </label>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        @if($day->pm_checkout_time)
-                                            {{ $day->pm_checkout_time }}
-                                        @elseif($day->pm_checkin)
-                                            <strong>Student still in latchkey</strong>
-                                            <form action="{{ route('pm_checkout', $child->id) }}" method="post">
-                                                @csrf
-                                                @method('PATCH')
-                                                <label for="pm_checkout">
-                                                    Checkout &nbsp;
-                                                    <input type="checkbox" name="pm_checkout" id="pm_checkout" {{ $day->pm_checkout ? 'checked' : '' }} onchange="this.form.submit()">
-                                                </label>
-                                            </form>
-                                        @else
-                                            <strong>Student not in afternoon latchkey</strong>
-                                        @endif
-                                    </td>
-                                @endforeach
+                                    @else
+                                        <strong>Student not in afternoon latchkey</strong>
+                                    @endif
+                                </td>
                             </tr>
                             @endforeach
                         @else
-                        <tr class="text-center">
-                            <td>No Children</td>
-                        </tr>
+                            <tr class="text-center">
+                                <td>No Children</td>
+                            </tr>
                         @endif
                     </tbody>
                 </table>
