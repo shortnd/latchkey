@@ -15,6 +15,7 @@ class ChildSeeder extends Seeder
     {
         factory(Child::class, 20)->create()->each(function($child) {
             $child->addCheckin($child);
+            $child->addDailyTotal($child);
         });
     }
 }

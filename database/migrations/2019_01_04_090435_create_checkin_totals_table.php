@@ -16,8 +16,9 @@ class CreateCheckinTotalsTable extends Migration
         Schema::create('checkin_totals', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('child_id');
-            $table->integer('total_amount');
-            $table->integer('total_hours');
+            $table->integer('am_total_hours')->default(0);
+            $table->integer('total_amount')->default(0);
+            $table->integer('total_hours')->default(0);
             $table->timestamps();
         });
     }

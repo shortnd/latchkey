@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Child;
+use App\CheckinTotals;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,21 @@ class ChildCheckinController extends Controller
     public function am_checkin(Child $child, Request $request)
     {
         $am_checkin = $child->todaysCheckin();
+        $dailyTotals = $child->dailyTotal();
+        $today_totals = $child->dailyTotal();
+
+
         $am_checkin->update([ 'am_checkin' => $request->has(['am_checkin']), 'am_checkin_time' => Carbon::now()]);
+
+        $endTime = Carbon::create(today()->format('Y'), today()->format('m'), today()->format('d'), 8, 15, 0);
+        $today_totals = $am_checkin->am_checkin_time->diff($endTime)->format('%H.%I');
+        $currentTotal = $dailyTotals->total_amount + $today_totals;
+        $amTotal = $today_totals;
+
+        $dailyTotals->update([
+            'total_amount' => $currentTotal,
+            'am_total_hours' => $amTotal
+        ]);
 
         return back();
     }

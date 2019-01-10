@@ -30,9 +30,9 @@ class Child extends Model
         return $this->hasMany('App\CheckinTotals');
     }
 
-    public function checkin_weekly_totals()
+    public function dailyTotal()
     {
-        return $this->hasManyThrough('App\CheckinWeeklyTotals', 'App\CheckinTotals');
+        return $this->checkin_totals()->whereDate('created_at', today())->first();
     }
 
     public function weeklyCheckins()
@@ -64,5 +64,32 @@ class Child extends Model
                 'child_id' => $child->id
             ]);
         }
+    }
+
+    public function addDailyTotal($child)
+    {
+        if ($this->dailyTotal()) {
+            return $errors['daily_total'] = 'Daily total already created.';
+        } else {
+            return $this->checkin_totals()->create([
+                'child_id' => $child->id
+            ]);
+        }
+    }
+
+    // public function addWeeklyTotal($child)
+    // {
+    //     if ($this->weeklyTotal()) {
+    //         return $errors['weekly_total'] = 'Weekly totals already created.';
+    //     } else {
+    //         return $this->checkin_weekly_totals()->create([
+    //             'child_id' => $child->id
+    //         ]);
+    //     }
+    // }
+
+    public function addTime()
+    {
+
     }
 }
