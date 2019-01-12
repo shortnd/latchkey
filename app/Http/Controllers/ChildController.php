@@ -61,16 +61,8 @@ class ChildController extends Controller
      */
     public function show(Child $child)
     {
-        $child->today = $child->checkins()->whereDate('created_at', today())->get();
-        if (request('sort') == 'desc') {
-            $child->weekly = $child->checkins()->get()->groupBy(function($day) {
-                return Carbon::parse($day->created_at)->format('W');
-            })->reverse();
-        } else {
-            $child->weekly = $child->checkins()->get()->groupBy(function($day) {
-                return Carbon::parse($day->created_at)->format('W');
-            });
-        }
+        $child->today = $child->checkins()->whereDate('created_at', today())->first();
+        $child->totals = $child->checkin_totals()->whereDate('created_at', Carbon::now()->startOfWeek())->first();
 
         return view('child.show')->withChild($child);
     }

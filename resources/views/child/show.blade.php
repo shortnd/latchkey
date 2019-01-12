@@ -2,8 +2,6 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ route('children.show', $child->id)}}?sort=desc">Desc</a>
-        <a href="{{ route('children.show', $child->id) }}?sort=asc">Asc</a>
         <div class="row flex-column">
             <h2>{{ $child->fullName() }} </h2>
             <form action="{{ route('children.destroy', $child->id) }}" method="post">
@@ -16,6 +14,27 @@
             <a href="{{ route('children.edit', $child->id) }}" class="btn btn-secondary mb-3">Edit</a>
         </div>
         <div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    Current Weeks Total
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <th>Am Hours</th>
+                            <th>Total Hours</th>
+                            <th>Total for Week</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ $child->totals->am_total_hours }}</td>
+                                <td>{{ $child->totals->total_hours }}</td>
+                                <td>${{ $child->totals->total_amount }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             @if($errors->has('today_checkins'))
                 <div class="alert alert-danger">
                     {{ $errors->first('today_checkins') }}

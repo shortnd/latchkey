@@ -61,7 +61,7 @@ class Child extends Model
             return $errors['today_checkins'] = 'Already has checkin today.';
         } else {
             return $this->checkins()->create([
-                'child_id' => $child->id
+                'child_id' => $child->id,
             ]);
         }
     }
@@ -72,24 +72,9 @@ class Child extends Model
             return $errors['daily_total'] = 'Daily total already created.';
         } else {
             return $this->checkin_totals()->create([
-                'child_id' => $child->id
+                'child_id' => $child->id,
             ]);
         }
     }
 
-    // public function addWeeklyTotal($child)
-    // {
-    //     if ($this->weeklyTotal()) {
-    //         return $errors['weekly_total'] = 'Weekly totals already created.';
-    //     } else {
-    //         return $this->checkin_weekly_totals()->create([
-    //             'child_id' => $child->id
-    //         ]);
-    //     }
-    // }
-
-    public function addTime()
-    {
-
-    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Checkin extends Model
 {
     protected $guarded = [];
+
     public function child()
     {
         return $this->belongsTo(Child::class);
@@ -24,6 +25,7 @@ class Checkin extends Model
 
     public function am_disabled()
     {
+        return false;
         $time = Carbon::now()->format('H.m');
         if ($time > 6.30 && $time < 8) {
             return false;
@@ -33,6 +35,7 @@ class Checkin extends Model
 
     public function pm_disabled()
     {
+        return false;
         $time = Carbon::now()->format('H.m');
         if ($time > 15 && $time < 17.3) {
             return false;
