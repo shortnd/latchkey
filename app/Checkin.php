@@ -24,10 +24,8 @@ class Checkin extends Model
 
     public function am_disabled()
     {
-        return false;
-
-        $time = Carbon::now()->format('H');
-        if ($time > 5 && $time < 8) {
+        $time = Carbon::now()->format('H.m');
+        if ($time > 6.30 && $time < 8) {
             return false;
         }
         return true;
@@ -35,9 +33,8 @@ class Checkin extends Model
 
     public function pm_disabled()
     {
-        return true;
-        $time = Carbon::now()->format('H');
-        if ($time > 15 && $time < 17) {
+        $time = Carbon::now()->format('H.m');
+        if ($time > 15 && $time < 17.3) {
             return false;
         }
         return true;
