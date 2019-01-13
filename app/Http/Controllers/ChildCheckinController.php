@@ -22,19 +22,18 @@ class ChildCheckinController extends Controller
         $checkin = $child->todaysCheckin();
         $checkinTotals = $child->dailyTotal();
 
+        $checkin->update([
+            'am_checkin' => $request->has(['am_checkin']),
+            'am_checkin_time' => Carbon::now()
+        ]);
         $endTime = Carbon::create(today()->format('Y'), today()->format('m'), today()->format('d'), 8, 15, 0);
-        $checkin->am_checkin = $request->has(['am_checkin']);
-        $checkin->am_checkin_time = Carbon::now();
-
-
         $todayAMTotalHours = $checkin->am_checkin_time->diff($endTime)->format('%H.%I');
-        $rollingTotal = $checkinTotals->total_hours + $todayAMTotalHours;
-        $checkinTotals->total_hours = $rollingTotal;
-        $checkinTotals->am_total_hours = $todayAMTotalHours;
 
-        $checkin->update();
-        $checkinTotals->update();
-
+        $checkinTotals->update([
+            'total_hours' => $todayAMTotalHours,
+            'am_total_hours' => $todayAMTotalHours,
+            'total_amount' => 5
+        ]);
         return back();
     }
 
