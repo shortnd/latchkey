@@ -27,9 +27,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{ $child->totals->am_total_hours }}</td>
-                                <td>{{ $child->totals->total_hours }}</td>
-                                <td>${{ $child->totals->total_amount }}</td>
+                                {{-- TODO ADD TOTAL FOR WEEK --}}
                             </tr>
                         </tbody>
                     </table>
@@ -98,6 +96,11 @@
                                     @else
                                         <strong>Student not in afternoon latchkey</strong>
                                     @endif
+                                </td>
+                            </tr>
+                            <tr class="text-right">
+                                <td span="3">
+                                    ${{ $child->dailyTotal()->total_amount }}
                                 </td>
                             </tr>
                         </tbody>

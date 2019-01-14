@@ -18,6 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+// TODO start working on users next
+// Route::group(['middleware' => 'auth'], function() {
+// });
 Route::resource('children', 'ChildController');
 Route::post('add-day/{child}', 'ChildCheckinController@addNewCheckins');
 Route::patch('am-checkin/{child}', 'ChildCheckinController@am_checkin')->name('am_checkin');

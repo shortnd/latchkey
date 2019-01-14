@@ -35,6 +35,15 @@ class Child extends Model
         return $this->checkin_totals()->whereDate('created_at', today())->first();
     }
 
+    public function weeklyTotals()
+    {
+        $now = Carbon::now();
+        $startOfWeek = $now->startOfWeek()->format('Y-m-d H:i');
+        $endOfWeek = $now->endOfWeek()->format('Y-m-d H:i');
+        return $this->checkin_totals()->whereBetween('created_at', [$startOfWeek, $endOfWeek])->get();
+        // TODO ASK ABOUT calculations here... have alec look at it.
+    }
+
     public function weeklyCheckins()
     {
         $now = Carbon::now();

@@ -41,7 +41,7 @@ class ChildCheckinController extends Controller
     public function pm_checkin(Child $child, Request $request)
     {
         $pm_checkin = $child->todaysCheckin();
-        // $time = Carbon::createFromTime(15, 0, 0);
+
         $time = Carbon::create(today()->format('Y'),today()->format('m'),today()->format('d'),15,0,0);
         $pm_checkin->update(['pm_checkin' => $request->has(['pm_checkin']), 'pm_checkin_time' => $time]);
         return back();
