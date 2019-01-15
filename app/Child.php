@@ -35,13 +35,27 @@ class Child extends Model
         return $this->checkin_totals()->whereDate('created_at', today())->first();
     }
 
-    public function weeklyTotals()
+    protected function weeklyTotals()
     {
         $now = Carbon::now();
         $startOfWeek = $now->startOfWeek()->format('Y-m-d H:i');
         $endOfWeek = $now->endOfWeek()->format('Y-m-d H:i');
         return $this->checkin_totals()->whereBetween('created_at', [$startOfWeek, $endOfWeek])->get();
-        // TODO ASK ABOUT calculations here... have alec look at it.
+    }
+
+    public function weeklyAmCheckinTotals()
+    {
+        return $this->weeklyTotals()->sum('am_total_hours');
+    }
+
+    public function weeklyCheckinTotals()
+    {
+        return $this->weeklyTotals()->sum('total_hours');
+    }
+
+    public function weeklyTotal()
+    {
+        return $this->weeklyTotals()->sum('total_amount');
     }
 
     public function weeklyCheckins()

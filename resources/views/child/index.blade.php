@@ -7,6 +7,7 @@
                 <a href="{{ route('children.create') }}" class="btn btn-primary">Add Child</a>
             </div>
         </div>
+        @if ($children->count())
         <div class="row">
             <div class="card w-100">
                 <table class="table table-hover">
@@ -89,5 +90,8 @@
                 </table>
             </div><!--/.card-->
         </div>
+        @else
+        <h2 class="text-center">No Children</h2>
+        @endif
     </div>
 @endsection

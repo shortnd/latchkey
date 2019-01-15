@@ -27,7 +27,13 @@
                         </thead>
                         <tbody>
                             <tr>
-                                {{-- TODO ADD TOTAL FOR WEEK --}}
+                                <td>{{ $child->weeklyAmCheckinTotals() }}</td>
+                                <td>
+                                    {{ $child->weeklyCheckinTotals() }}
+                                </td>
+                                <td>
+                                    ${{ $child->weeklyTotal() }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -99,8 +105,8 @@
                                 </td>
                             </tr>
                             <tr class="text-right">
-                                <td span="3">
-                                    ${{ $child->dailyTotal()->total_amount }}
+                                <td colspan="3">
+                                    <strong>Total:</strong> ${{ $child->dailyTotal()->total_amount }}
                                 </td>
                             </tr>
                         </tbody>
