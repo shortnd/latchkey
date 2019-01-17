@@ -17,6 +17,8 @@
             <div class="card mb-3">
                 <div class="card-header">
                     Current Weeks Total
+                    <br>
+                    {{ today()->startOfWeek()->format('M d') }} - {{ today()->endOfWeek()->format('M d') }}
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -118,7 +120,7 @@
         @foreach($child->weeklyCheckins() as $weekly)
         <div class="card mb-3">
             <div class="card-header">
-                Week of {{ $weekly->first()->created_at->startOfWeek()->format('l d') }}
+                Week of {{ $weekly->first()->created_at->startOfWeek()->format('l d') }} - {{ $weekly->first()->created_at->endOfWeek()->format('d') }}
             </div>
             <div class="card-body">
                 <table class="table">
