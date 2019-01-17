@@ -28,6 +28,7 @@ Route::patch('pm-checkin/{child}', 'ChildCheckinController@pm_checkin')->name('p
 Route::patch('pm-checkout/{child}', 'ChildCheckinController@pm_checkout')->name('pm_checkout');
 
 // Latchkey Policy & Contract pages
-Route::get('policy', function() {
-    return view('policy.index');
+Route::group(['prefix' => 'policy'], function() {
+    Route::get('', 'PolicyController@index');
+    Route::get('edit', 'PolicyController@edit');
 });
