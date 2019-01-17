@@ -99,5 +99,4 @@ class Child extends Model
             ]);
         }
     }
-
 }
