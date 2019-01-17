@@ -27,6 +27,9 @@ Route::patch('am-checkin/{child}', 'ChildCheckinController@am_checkin')->name('a
 Route::patch('pm-checkin/{child}', 'ChildCheckinController@pm_checkin')->name('pm_checkin');
 Route::patch('pm-checkout/{child}', 'ChildCheckinController@pm_checkout')->name('pm_checkout');
 
+// Latefees
+Route::post('children/{child}/late-fee', 'LatefeeController@addLateFee')->name('latefee');
+
 // Latchkey Policy & Contract pages
 Route::group(['prefix' => 'policy'], function() {
     Route::get('', 'PolicyController@index');

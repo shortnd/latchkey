@@ -3,6 +3,13 @@
 @section('content')
     <div class="container">
         <div class="row flex-column">
+            {{--  REMOVE AFTER TESTING  --}}
+            <form action="{{ route('latefee', $child->id) }}" method="post">
+                @csrf
+                <button type="submit">late fee</button>
+            </form>
+            <hr>
+            {{--  REMOVE AFTER TESTING  --}}
             <h2>{{ $child->fullName() }} </h2>
             <form action="{{ route('children.destroy', $child->id) }}" method="post">
                 @csrf
@@ -14,6 +21,11 @@
             <a href="{{ route('children.edit', $child->id) }}" class="btn btn-secondary mb-3">Edit</a>
         </div>
         <div>
+            @if($child->todaysCheckin()->late_fee)
+                <div class="alert alert-danger">
+                    Latefee(s) added today
+                </div>
+            @endif
             <div class="card mb-3">
                 <div class="card-header">
                     Current Weeks Total
