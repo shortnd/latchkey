@@ -6,6 +6,7 @@
             <div class="card-header text-center">
                 <h2>Harper Woods School Latchkey Policy</h2>
             </div><!--/.card-header-->
+            {!! $policy->content !!}
             <div class="card-body">
                 <h3>Purpose:</h3>
                 <p>

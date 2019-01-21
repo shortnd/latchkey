@@ -34,4 +34,5 @@ Route::post('children/{child}/late-fee', 'LatefeeController@addLateFee')->name('
 Route::group(['prefix' => 'policy'], function() {
     Route::get('', 'PolicyController@index');
     Route::get('edit', 'PolicyController@edit');
+    Route::put('', 'PolicyController@update');
 });
