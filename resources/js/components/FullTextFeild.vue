@@ -79,10 +79,11 @@ export default {
         EditorContent
     },
     props: {
-        content: String,
+        policy: String,
     },
     data() {
         return {
+            errors: [],
             editor: new Editor({
                 extensions: [
                     new HardBreak(),
@@ -97,7 +98,7 @@ export default {
                     new Underline(),
                     new History(),
                 ],
-                content: this.content,
+                content: this.policy,
                 onUpdate: ({ getHTML }) => {
                     this.html = getHTML()
                 },
@@ -110,15 +111,19 @@ export default {
     },
     methods: {
         updatePolicy() {
-            console.log(this.html)
+            this.errors = [];
+            console.log(this.html);
             axios.put('/policy', {
-                content: this.html
+                policy: this.html
             })
             .then(res => {
-                // console.log(res);
-                // window.location = '/policy'
+                window.location = '/policy'
             })
-            .catch(e => console.error(e))
+            .catch(error => {
+                if (error.response.status === 422) {
+                    this.errors = error.response.data.errors || {};
+                }
+            })
         },
     }
 }

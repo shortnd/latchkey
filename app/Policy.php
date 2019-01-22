@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Policy extends Model
 {
-    protected $fillable = ['content'];
+    protected $fillable = ['policy'];
     protected $guarded = ['id'];
 }

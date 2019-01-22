@@ -1864,17 +1864,18 @@ __webpack_require__.r(__webpack_exports__);
     EditorContent: tiptap__WEBPACK_IMPORTED_MODULE_0__["EditorContent"]
   },
   props: {
-    content: String
+    policy: String
   },
   data: function data() {
     var _this = this;
 
     return {
+      errors: [],
       editor: new tiptap__WEBPACK_IMPORTED_MODULE_0__["Editor"]({
         extensions: [new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["HardBreak"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["Heading"]({
           levels: [2, 3]
         }), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["HorizontalRule"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["BulletList"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["OrderedList"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["ListItem"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["Bold"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["Italic"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["Strike"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["Underline"](), new tiptap_extensions__WEBPACK_IMPORTED_MODULE_1__["History"]()],
-        content: this.content,
+        content: this.policy,
         onUpdate: function onUpdate(_ref) {
           var getHTML = _ref.getHTML;
           _this.html = getHTML();
@@ -1888,13 +1889,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updatePolicy: function updatePolicy() {
+      var _this2 = this;
+
+      this.errors = [];
       console.log(this.html);
       axios.put('/policy', {
-        content: this.html
-      }).then(function (res) {// console.log(res);
-        // window.location = '/policy'
-      }).catch(function (e) {
-        return console.error(e);
+        policy: this.html
+      }).then(function (res) {
+        window.location = '/policy';
+      }).catch(function (error) {
+        if (error.response.status === 422) {
+          _this2.errors = error.response.data.errors || {};
+        }
       });
     }
   }

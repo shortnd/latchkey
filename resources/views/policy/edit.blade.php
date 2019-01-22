@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <full-text-feild content="{!! $page->content !!}"></full-text-feild>
+            <full-text-feild policy="{{ $page->policy }}" />
         </div>
     </div>
 @endsection

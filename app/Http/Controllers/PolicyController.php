@@ -30,7 +30,7 @@ class PolicyController extends Controller
     {
         $policy = Policy::first();
         $policy->update([
-            'content' => $request->content
+            'policy' => $request->policy
         ]);
     }
 }
