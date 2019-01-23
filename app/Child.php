@@ -25,14 +25,40 @@ class Child extends Model
         return $this->checkins()->whereDate('created_at', today())->first();
     }
 
+    public function todayTotal()
+    {
+        $total = 0;
+        $today = $this->todaysCheckin();
+        if ($today->am_checkin) {
+            $total += 5;
+        }
+        if ($today->pm_checkout_time) {
+            $pm_diff = Carbon::parse($today->pm_checkout_time)->diff(Carbon::parse($today->pm_checkin_time))->format('%H.%I');
+            $total += $pm_diff * 4;
+        }
+        return round($total);
+    }
+
     public function checkin_totals()
     {
         return $this->hasMany('App\CheckinTotals');
     }
 
-    public function dailyTotal()
+    // public function dailyTotal()
+    // {
+    //     return $this->checkin_totals()->whereDate('created_at', today())->first();
+    // }
+
+    /**
+     * Need to refactor this / rename
+     */
+    public function weekly_Total()
     {
-        return $this->checkin_totals()->whereDate('created_at', today())->first();
+        $now = Carbon::now();
+        $startOfWeek = $now->startOfWeek()->format('Y-m-d H:i');
+        $endOfWeek = $now->endOfWeek()->format('Y-m-d H:i');
+
+        return $this->checkin_totals()->whereBetween('created_at', [$startOfWeek, $endOfWeek])->first();
     }
 
     protected function weeklyTotals()
@@ -56,6 +82,11 @@ class Child extends Model
     public function weeklyTotal()
     {
         return $this->weeklyTotals()->sum('total_amount');
+    }
+
+    public function todayCheckin()
+    {
+        return $this->checkins()->whereDate('created_at', today())->first();
     }
 
     public function weeklyCheckins()
@@ -91,12 +122,19 @@ class Child extends Model
 
     public function addDailyTotal($child)
     {
-        if ($this->dailyTotal()) {
-            return $errors['daily_total'] = 'Daily total already created.';
+        if ($this->weekly_Total()) {
+            return $errors['weekly_total'] = 'Weekly total already created';
         } else {
             return $this->checkin_totals()->create([
-                'child_id' => $child->id,
+                'child_id' => $child->id
             ]);
         }
+        // if ($this->dailyTotal()) {
+        //     return $errors['daily_total'] = 'Daily total already created.';
+        // } else {
+        //     return $this->checkin_totals()->create([
+        //         'child_id' => $child->id,
+        //     ]);
+        // }
     }
 }

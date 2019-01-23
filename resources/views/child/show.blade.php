@@ -120,7 +120,7 @@
                             </tr>
                             <tr class="text-right">
                                 <td colspan="3">
-                                    <strong>Total:</strong> ${{ $child->dailyTotal()->total_amount }}
+                                    ${{$child->todayTotal()}}
                                 </td>
                             </tr>
                         </tbody>
