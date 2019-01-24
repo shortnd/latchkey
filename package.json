@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.5.22"
     },
     "dependencies": {
+        "signature_pad": "^3.0.0-beta.3",
         "tiptap": "^1.8.0",
         "tiptap-extensions": "^1.8.0"
     }

@@ -4,8 +4,9 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
 require('./bootstrap');
+// require('signature_pad');
+import SignaturePad from "signature_pad";
 
 window.Vue = require('vue');
 
@@ -28,6 +29,11 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+var sig = new SignaturePad(document.querySelector('canvas'));
+
 const app = new Vue({
     el: '#app',
+    methods: {
+        
+    }
 });

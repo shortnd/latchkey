@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('child.components.modal')
         <div class="row">
             <div class="mb-3">
                 <a href="{{ route('children.create') }}" class="btn btn-primary">Add Child</a>
@@ -30,7 +31,6 @@
                     <tbody>
                         @if($children)
                             @foreach($children as $child)
-                        <child-table-row route="{{ route('children.show', $child->id) }}" child="{{ $child }}"></child-table-row>
                             <tr>
                                 <td>
                                     <a href="{{ route('children.show', $child->id) }}">{{ $child->first_name }} {{ $child->last_name }}</a>
