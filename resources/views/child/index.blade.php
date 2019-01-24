@@ -30,6 +30,7 @@
                     <tbody>
                         @if($children)
                             @foreach($children as $child)
+                        <child-table-row route="{{ route('children.show', $child->id) }}" child="{{ $child }}"></child-table-row>
                             <tr>
                                 <td>
                                     <a href="{{ route('children.show', $child->id) }}">{{ $child->first_name }} {{ $child->last_name }}</a>
