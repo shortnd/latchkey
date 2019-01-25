@@ -70,6 +70,7 @@ checkboxes.forEach(checkbox => {
     modal.querySelector('.close').addEventListener('click', function() {
         modal.classList.remove('active');
         body.classList.remove('modal-open');
+        sigPad.clear();
         modal.parentElement.querySelector('input[type^="checkbox"]').checked = false;
     });
     modal.querySelector('button').addEventListener('click', function(e) {
