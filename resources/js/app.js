@@ -5,8 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 require('./bootstrap');
-require('signature_pad');
-// import SignaturePad from "signature_pad";
+import SignaturePad from "signature_pad";
 
 window.Vue = require('vue');
 

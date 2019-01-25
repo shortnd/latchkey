@@ -73069,17 +73069,18 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var signature_pad__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! signature_pad */ "./node_modules/signature_pad/dist/signature_pad.m.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
-__webpack_require__(/*! signature_pad */ "./node_modules/signature_pad/dist/signature_pad.m.js"); // import SignaturePad from "signature_pad";
 
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -73130,7 +73131,7 @@ checkboxes.forEach(function (checkbox) {
   var modal = checkbox.parentElement.parentElement.querySelector('.sig-modal');
   var body = document.querySelector('body');
   var canvas = modal.querySelector('canvas');
-  var sigPad = new SignaturePad(canvas, {
+  var sigPad = new signature_pad__WEBPACK_IMPORTED_MODULE_0__["default"](canvas, {
     penColor: "rgb(3,3,3)",
     backgroundColor: "#fff"
   });
@@ -73141,6 +73142,7 @@ checkboxes.forEach(function (checkbox) {
   modal.querySelector('.close').addEventListener('click', function () {
     modal.classList.remove('active');
     body.classList.remove('modal-open');
+    sigPad.clear();
     modal.parentElement.querySelector('input[type^="checkbox"]').checked = false;
   });
   modal.querySelector('button').addEventListener('click', function (e) {
