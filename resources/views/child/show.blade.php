@@ -123,6 +123,24 @@
                                     ${{$child->todayTotal()}}
                                 </td>
                             </tr>
+                            @if($child->todaysCheckin()->am_sig || $child->todaysCheckin()->pm_sig)
+                            <tr>
+                                <th>Am Checkin Initals</th>
+                                <th>Pm Checkin Initals</th>
+                                <tr>
+                                    <td>
+                                        @if($child->todaysCheckin()->am_sig)
+                                            <img src="{{ $child->todaysCheckin()->am_sig }}" alt="" style="width:15%;">
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($child->todaysCheckin()->pm_sig)
+                                            <img src="{{ $child->todaysCheckin()->pm_sig }}" alt="" style="width:15%">
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

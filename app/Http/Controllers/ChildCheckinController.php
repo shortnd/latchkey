@@ -24,7 +24,8 @@ class ChildCheckinController extends Controller
 
         $checkin->update([
             'am_checkin' => $request->has(['am_checkin']),
-            'am_checkin_time' => Carbon::now()
+            'am_checkin_time' => Carbon::now(),
+            'am_sig' => $request->sig
         ]);
         $endTime = Carbon::create(today()->format('Y'), today()->format('m'), today()->format('d'), 8, 15, 0);
         // $endTime = Carbon::createFromTime(8, 15, 0);

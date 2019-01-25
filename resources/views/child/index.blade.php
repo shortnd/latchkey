@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container">
-        @include('child.components.modal')
         <div class="row">
             <div class="mb-3">
                 <a href="{{ route('children.create') }}" class="btn btn-primary">Add Child</a>
@@ -37,12 +36,20 @@
                                 </td>
                                 <td>
                                     @if(!$child->today_checkin->am_checkin)
+                                    {{--  --}}
                                     <form action="{{ route('am_checkin', $child->id) }}" method="post">
                                         @csrf
                                         @method('PATCH')
                                         <label for="am_checkin">Check In &nbsp;
-                                            <input type="checkbox" name="am_checkin" {{ $child->today_checkin->am_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $child->today_checkin->am_disabled() ? 'disabled' : '' }}>
+                                            <input
+                                                type="checkbox"
+                                                name="am_checkin" {{ $child->today_checkin->am_checkin ? 'checked' : '' }}
+                                                {{-- onchange="this.form.submit()"  --}}
+                                                {{-- @click="this.openSigModal" --}}
+                                                {{-- {{ $child->today_checkin->am_disabled() ? 'disabled' : '' }} --}}
+                                                >
                                         </label>
+                                        @include('child.components.modal')
                                     </form>
                                     @else
                                         Checked in at {{ $child->today_checkin->amCheckinTime() }}

@@ -10809,3 +10809,65 @@ h3 {
   color: #ffffff;
 }
 
+.modal-open {
+  overflow: hidden;
+  position: relative;
+}
+
+.modal-open:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.sig-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.sig-modal.active {
+  display: block;
+  margin: 100px auto;
+  background: #fff;
+  z-index: 100;
+  max-width: 800px;
+}
+
+.sig-modal:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 70%;
+  margin: 0 auto;
+  max-width: 450px;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.sig-modal canvas {
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.sig-modal .close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+

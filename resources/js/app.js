@@ -5,8 +5,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 require('./bootstrap');
-// require('signature_pad');
-import SignaturePad from "signature_pad";
+require('signature_pad');
+// import SignaturePad from "signature_pad";
 
 window.Vue = require('vue');
 
@@ -29,11 +29,59 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var sig = new SignaturePad(document.querySelector('canvas'));
+// var sig = new SignaturePad(document.querySelector('canvas'));
 
 const app = new Vue({
     el: '#app',
+    data() {
+        return {
+            sig: '',
+        }
+    },
     methods: {
-        
+         openSigModal: function() {
+            console.log(this);
+        }
     }
+});
+
+// var canvas = document.querySelector('canvas');
+
+// var signaturePad = new SignaturePad(canvas, {
+//     penColor: "rgb(0, 0, 0)"
+// });
+function openSigModal() {
+    console.log(this);
+}
+const checkboxes = document.querySelectorAll('input[name^="am_checkin"]');
+
+checkboxes.forEach(checkbox => {
+    const modal = checkbox.parentElement.parentElement.querySelector('.sig-modal');
+    const body = document.querySelector('body');
+    const canvas = modal.querySelector('canvas');
+    const sigPad = new SignaturePad(canvas, {
+        penColor: "rgb(3,3,3)",
+        backgroundColor: "#fff"
+    });
+    checkbox.addEventListener('click',function() {
+        modal.classList.add('active');
+        body.classList.add('modal-open');
+    });
+    modal.querySelector('.close').addEventListener('click', function() {
+        modal.classList.remove('active');
+        body.classList.remove('modal-open');
+        modal.parentElement.querySelector('input[type^="checkbox"]').checked = false;
+    });
+    modal.querySelector('button').addEventListener('click', function(e) {
+        if (!sigPad.isEmpty()) {
+            modal.querySelector('input[name^="sig"').value = sigPad.toDataURL("image/jpeg");
+            if (modal.querySelector('input[name^="sig"').value > 0) {
+                this.form.submit();
+            }
+        } else {
+            e.preventDefault();
+            alert('Please Sign to Checkin Child');
+            this.form.querySelector('input[type^="checkbox"').checked = false;
+        }
+    });
 });

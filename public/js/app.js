@@ -73069,19 +73069,17 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var signature_pad__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! signature_pad */ "./node_modules/signature_pad/dist/signature_pad.m.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // require('signature_pad');
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! signature_pad */ "./node_modules/signature_pad/dist/signature_pad.m.js"); // import SignaturePad from "signature_pad";
 
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -73104,11 +73102,60 @@ files.keys().map(function (key) {
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+// var sig = new SignaturePad(document.querySelector('canvas'));
 
-var sig = new signature_pad__WEBPACK_IMPORTED_MODULE_0__["default"](document.querySelector('canvas'));
 var app = new Vue({
   el: '#app',
-  methods: {}
+  data: function data() {
+    return {
+      sig: ''
+    };
+  },
+  methods: {
+    openSigModal: function openSigModal() {
+      console.log(this);
+    }
+  }
+}); // var canvas = document.querySelector('canvas');
+// var signaturePad = new SignaturePad(canvas, {
+//     penColor: "rgb(0, 0, 0)"
+// });
+
+function openSigModal() {
+  console.log(this);
+}
+
+var checkboxes = document.querySelectorAll('input[name^="am_checkin"]');
+checkboxes.forEach(function (checkbox) {
+  var modal = checkbox.parentElement.parentElement.querySelector('.sig-modal');
+  var body = document.querySelector('body');
+  var canvas = modal.querySelector('canvas');
+  var sigPad = new SignaturePad(canvas, {
+    penColor: "rgb(3,3,3)",
+    backgroundColor: "#fff"
+  });
+  checkbox.addEventListener('click', function () {
+    modal.classList.add('active');
+    body.classList.add('modal-open');
+  });
+  modal.querySelector('.close').addEventListener('click', function () {
+    modal.classList.remove('active');
+    body.classList.remove('modal-open');
+    modal.parentElement.querySelector('input[type^="checkbox"]').checked = false;
+  });
+  modal.querySelector('button').addEventListener('click', function (e) {
+    if (!sigPad.isEmpty()) {
+      modal.querySelector('input[name^="sig"').value = sigPad.toDataURL("image/jpeg");
+
+      if (modal.querySelector('input[name^="sig"').value > 0) {
+        this.form.submit();
+      }
+    } else {
+      e.preventDefault();
+      alert('Please Sign to Checkin Child');
+      this.form.querySelector('input[type^="checkbox"').checked = false;
+    }
+  });
 });
 
 /***/ }),
@@ -73414,8 +73461,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/c/code/laravel/latchkey/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/c/code/laravel/latchkey/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/kortr/code/laravel/latchkey/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/kortr/code/laravel/latchkey/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

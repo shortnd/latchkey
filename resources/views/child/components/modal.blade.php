@@ -1,3 +1,6 @@
 <div class="sig-modal">
-  <canvas height="500" width="500"></canvas>
+    <span class="close">X</span>
+  <canvas height="250px" width="500px"></canvas>
+  <input type="hidden" name="sig">
+  <button>submit</button>
 </div><!--/.sig-modal-->
