@@ -49,12 +49,14 @@ const app = new Vue({
 // var signaturePad = new SignaturePad(canvas, {
 //     penColor: "rgb(0, 0, 0)"
 // });
-function openSigModal() {
-    console.log(this);
+function sigModal() {
+    // TODO ADD funtions here
 }
-const checkboxes = document.querySelectorAll('input[name^="am_checkin"]');
 
-checkboxes.forEach(checkbox => {
+const am_checkboxes = document.querySelectorAll('input[name^="am_checkin"]');
+const pm_checkboxes = document.querySelectorAll('input[name^="pm_checkout"]');
+
+am_checkboxes.forEach(checkbox => {
     const modal = checkbox.parentElement.parentElement.querySelector('.sig-modal');
     const body = document.querySelector('body');
     const canvas = modal.querySelector('canvas');

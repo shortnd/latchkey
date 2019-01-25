@@ -41,13 +41,7 @@
                                         @csrf
                                         @method('PATCH')
                                         <label for="am_checkin">Check In &nbsp;
-                                            <input
-                                                type="checkbox"
-                                                name="am_checkin" {{ $child->today_checkin->am_checkin ? 'checked' : '' }}
-                                                {{-- onchange="this.form.submit()"  --}}
-                                                {{-- @click="this.openSigModal" --}}
-                                                {{-- {{ $child->today_checkin->am_disabled() ? 'disabled' : '' }} --}}
-                                                >
+                                            <input type="checkbox" name="am_checkin" {{ $child->today_checkin->am_checkin ? 'checked' : '' }}>
                                         </label>
                                         @include('child.components.modal')
                                     </form>
@@ -82,6 +76,7 @@
                                                 Checkout &nbsp;
                                                 <input type="checkbox" name="pm_checkout" id="pm_checkout" {{ $child->today_checkin->pm_checkout ? 'checked' : '' }} onchange="this.form.submit()">
                                             </label>
+                                            @include('child.components.modal')
                                         </form>
                                     @else
                                         <strong>Student not in afternoon latchkey</strong>
