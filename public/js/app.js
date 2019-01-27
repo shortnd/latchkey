@@ -73106,59 +73106,65 @@ files.keys().map(function (key) {
 // var sig = new SignaturePad(document.querySelector('canvas'));
 
 var app = new Vue({
-  el: '#app',
-  data: function data() {
-    return {
-      sig: ''
-    };
-  },
-  methods: {
-    openSigModal: function openSigModal() {
-      console.log(this);
-    }
-  }
-}); // var canvas = document.querySelector('canvas');
-// var signaturePad = new SignaturePad(canvas, {
-//     penColor: "rgb(0, 0, 0)"
-// });
+  el: '#app'
+});
+var am_checkboxes = document.querySelectorAll('input[name^="am_checkin"]');
+var pm_checkboxes = document.querySelectorAll('input[name^="pm_checkout"]');
+var body = document.querySelector('body');
 
-function openSigModal() {
-  console.log(this);
+function sigModal(checkboxes) {
+  var _this = this;
+
+  checkboxes.forEach(function (checkbox) {
+    var modal = checkbox.parentElement.parentElement.querySelector('.sig-modal');
+    var canvas = modal.querySelector('canvas');
+    var sigPad = new signature_pad__WEBPACK_IMPORTED_MODULE_0__["default"](canvas, {
+      penColor: "#333",
+      backgroundColor: "#fff"
+    });
+    var close = modal.querySelector('.close');
+    var submit = modal.querySelector('button[type^="submit"]');
+
+    var openModal = function openModal() {
+      modal.classList.add('active');
+      body.classList.add('modal-open');
+    };
+
+    var closeModal = function closeModal(event) {
+      if (event.key == "escape" || event.type == "click") {
+        modal.classList.remove('active');
+        body.classList.remove('modal-open');
+        sigPad.clear();
+        checkbox.checked = false;
+      }
+    };
+
+    var submitSig = function submitSig(event) {
+      var sigInput = modal.querySelector('input[name^="sig"]');
+
+      if (!sigPad.isEmpty()) {
+        sigInput.value = sigPad.toDataURL("image/jpeg");
+
+        if (sigInput.value > 0) {
+          console.log(sigInput.value.length);
+
+          _this.form.submit();
+        }
+      } else {
+        event.preventDefault();
+        alert('Please Sign to Checkin Child');
+        checkbox.checked = false;
+      }
+    };
+
+    checkbox.addEventListener('click', openModal);
+    close.addEventListener('click', closeModal);
+    submit.addEventListener('click', submitSig);
+  });
 }
 
-var checkboxes = document.querySelectorAll('input[name^="am_checkin"]');
-checkboxes.forEach(function (checkbox) {
-  var modal = checkbox.parentElement.parentElement.querySelector('.sig-modal');
-  var body = document.querySelector('body');
-  var canvas = modal.querySelector('canvas');
-  var sigPad = new signature_pad__WEBPACK_IMPORTED_MODULE_0__["default"](canvas, {
-    penColor: "rgb(3,3,3)",
-    backgroundColor: "#fff"
-  });
-  checkbox.addEventListener('click', function () {
-    modal.classList.add('active');
-    body.classList.add('modal-open');
-  });
-  modal.querySelector('.close').addEventListener('click', function () {
-    modal.classList.remove('active');
-    body.classList.remove('modal-open');
-    sigPad.clear();
-    modal.parentElement.querySelector('input[type^="checkbox"]').checked = false;
-  });
-  modal.querySelector('button').addEventListener('click', function (e) {
-    if (!sigPad.isEmpty()) {
-      modal.querySelector('input[name^="sig"').value = sigPad.toDataURL("image/jpeg");
-
-      if (modal.querySelector('input[name^="sig"').value > 0) {
-        this.form.submit();
-      }
-    } else {
-      e.preventDefault();
-      alert('Please Sign to Checkin Child');
-      this.form.querySelector('input[type^="checkbox"').checked = false;
-    }
-  });
-});
+sigModal(am_checkboxes);
+sigModal(pm_checkboxes);
 
 /***/ }),
 

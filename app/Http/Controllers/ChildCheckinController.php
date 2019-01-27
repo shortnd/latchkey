@@ -50,11 +50,15 @@ class ChildCheckinController extends Controller
 
     public function pm_checkout(Child $child, Request $request)
     {
+        $this->validate($request, [
+            'sig' => 'required|min:10000',
+        ]);
+
         $pm_checkout = $child->todaysCheckin();
         $checkinTotals = $child->weekly_Total();
 
         if ($request->has('pm_checkout')) {
-            $pm_checkout->update(['pm_checkout_time' => Carbon::now()]);
+            $pm_checkout->update(['pm_checkout_time' => Carbon::now(), 'pm_sig' => $request->sig]);
 
             $pm_diff = Carbon::parse($pm_checkout->pm_checkin_time)->diff($pm_checkout->pm_checkout_time)->format('%H.%I');
             $rollingTotalHours = $checkinTotals->total_hours + $pm_diff;

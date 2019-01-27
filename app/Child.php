@@ -120,7 +120,7 @@ class Child extends Model
         }
     }
 
-    public function addDailyTotal($child)
+    public function addWeeklyTotal($child)
     {
         if ($this->weekly_Total()) {
             return $errors['weekly_total'] = 'Weekly total already created';
@@ -129,12 +129,5 @@ class Child extends Model
                 'child_id' => $child->id
             ]);
         }
-        // if ($this->dailyTotal()) {
-        //     return $errors['daily_total'] = 'Daily total already created.';
-        // } else {
-        //     return $this->checkin_totals()->create([
-        //         'child_id' => $child->id,
-        //     ]);
-        // }
     }
 }

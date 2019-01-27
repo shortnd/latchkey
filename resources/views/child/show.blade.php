@@ -78,8 +78,9 @@
                                         @csrf
                                         @method('PATCH')
                                         <label for="am_checkin">Check In &nbsp;
-                                            <input type="checkbox" name="am_checkin" {{ $child->todaysCheckin()->am_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $child->todaysCheckin()->am_disabled() ? 'disabled' : '' }}>
+                                            <input type="checkbox" name="am_checkin" {{ $child->todaysCheckin()->am_checkin ? 'checked' : '' }} {{ $child->todaysCheckin()->am_disabled() ? 'disabled' : '' }}>
                                         </label>
+                                        @signituremodal
                                     </form>
                                     @else
                                         Checked in at {{ $child->todaysCheckin()->amCheckinTime() }}
@@ -110,8 +111,9 @@
                                             @method('PATCH')
                                             <label for="pm_checkout">
                                                 Checkout &nbsp;
-                                                <input type="checkbox" name="pm_checkout" id="pm_checkout" {{ $child->todaysCheckin()->pm_checkout ? 'checked' : '' }} onchange="this.form.submit()">
+                                                <input type="checkbox" name="pm_checkout" id="pm_checkout" {{ $child->todaysCheckin()->pm_checkout ? 'checked' : '' }}>
                                             </label>
+                                            @signituremodal
                                         </form>
                                     @else
                                         <strong>Student not in afternoon latchkey</strong>
@@ -123,24 +125,28 @@
                                     ${{$child->todayTotal()}}
                                 </td>
                             </tr>
-                            @if($child->todaysCheckin()->am_sig || $child->todaysCheckin()->pm_sig)
-                            <tr>
-                                <th>Am Checkin Initals</th>
-                                <th>Pm Checkin Initals</th>
-                                <tr>
-                                    <td>
-                                        @if($child->todaysCheckin()->am_sig)
-                                            <img src="{{ $child->todaysCheckin()->am_sig }}" alt="" style="width:15%;">
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($child->todaysCheckin()->pm_sig)
-                                            <img src="{{ $child->todaysCheckin()->pm_sig }}" alt="" style="width:15%">
-                                        @endif
-                                    </td>
-                                </tr>
-                            </tr>
-                            @endif
+                        </tbody>
+                    </table>
+                    <table class="table">
+                        <thead>
+                            <th>Am Checkin Initals</th>
+                            <th>Pm Checkin Initals</th>
+                        </thead>
+                        <tbody>
+                        @if($child->todaysCheckin()->am_sig || $child->todaysCheckin()->pm_sig)
+                        <tr>
+                            <td>
+                                @if($child->todaysCheckin()->am_sig)
+                                    <img src="{{ $child->todaysCheckin()->am_sig }}" alt="am signature" class="signature">
+                                @endif
+                            </td>
+                            <td>
+                                @if($child->todaysCheckin()->pm_sig)
+                                    <img src="{{ $child->todaysCheckin()->pm_sig }}" alt="pm signature" class="signature">
+                                @endif
+                            </td>
+                        </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>

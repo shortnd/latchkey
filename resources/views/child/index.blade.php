@@ -7,6 +7,13 @@
                 <a href="{{ route('children.create') }}" class="btn btn-primary">Add Child</a>
             </div>
         </div>
+        @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                    {{ $error }}
+                @endforeach
+            </div>
+        @endif
         @if ($children->count())
         <div class="row">
             <div class="card w-100">
@@ -36,14 +43,13 @@
                                 </td>
                                 <td>
                                     @if(!$child->today_checkin->am_checkin)
-                                    {{--  --}}
                                     <form action="{{ route('am_checkin', $child->id) }}" method="post">
                                         @csrf
                                         @method('PATCH')
                                         <label for="am_checkin">Check In &nbsp;
                                             <input type="checkbox" name="am_checkin" {{ $child->today_checkin->am_checkin ? 'checked' : '' }}>
                                         </label>
-                                        @include('child.components.modal')
+                                        @signituremodal
                                     </form>
                                     @else
                                         Checked in at {{ $child->today_checkin->amCheckinTime() }}
@@ -74,9 +80,9 @@
                                             @method('PATCH')
                                             <label for="pm_checkout">
                                                 Checkout &nbsp;
-                                                <input type="checkbox" name="pm_checkout" id="pm_checkout" {{ $child->today_checkin->pm_checkout ? 'checked' : '' }} onchange="this.form.submit()">
+                                                <input type="checkbox" name="pm_checkout" id="pm_checkout" {{ $child->today_checkin->pm_checkout ? 'checked' : '' }}>
                                             </label>
-                                            @include('child.components.modal')
+                                            @signituremodal
                                         </form>
                                     @else
                                         <strong>Student not in afternoon latchkey</strong>

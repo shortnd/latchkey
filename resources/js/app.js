@@ -32,58 +32,54 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 
 const app = new Vue({
     el: '#app',
-    data() {
-        return {
-            sig: '',
-        }
-    },
-    methods: {
-         openSigModal: function() {
-            console.log(this);
-        }
-    }
 });
-
-// var canvas = document.querySelector('canvas');
-
-// var signaturePad = new SignaturePad(canvas, {
-//     penColor: "rgb(0, 0, 0)"
-// });
-function sigModal() {
-    // TODO ADD funtions here
-}
 
 const am_checkboxes = document.querySelectorAll('input[name^="am_checkin"]');
 const pm_checkboxes = document.querySelectorAll('input[name^="pm_checkout"]');
+const body = document.querySelector('body');
 
-am_checkboxes.forEach(checkbox => {
-    const modal = checkbox.parentElement.parentElement.querySelector('.sig-modal');
-    const body = document.querySelector('body');
-    const canvas = modal.querySelector('canvas');
-    const sigPad = new SignaturePad(canvas, {
-        penColor: "rgb(3,3,3)",
-        backgroundColor: "#fff"
-    });
-    checkbox.addEventListener('click',function() {
-        modal.classList.add('active');
-        body.classList.add('modal-open');
-    });
-    modal.querySelector('.close').addEventListener('click', function() {
-        modal.classList.remove('active');
-        body.classList.remove('modal-open');
-        sigPad.clear();
-        modal.parentElement.querySelector('input[type^="checkbox"]').checked = false;
-    });
-    modal.querySelector('button').addEventListener('click', function(e) {
-        if (!sigPad.isEmpty()) {
-            modal.querySelector('input[name^="sig"').value = sigPad.toDataURL("image/jpeg");
-            if (modal.querySelector('input[name^="sig"').value > 0) {
-                this.form.submit();
+function sigModal(checkboxes) {
+    checkboxes.forEach(checkbox => {
+        const modal = checkbox.parentElement.parentElement.querySelector('.sig-modal');
+        const canvas = modal.querySelector('canvas');
+        const sigPad = new SignaturePad(canvas, {penColor: "#333",backgroundColor: "#fff"});
+        const close = modal.querySelector('.close');
+        const submit = modal.querySelector('button[type^="submit"]');
+
+        const openModal = () => {
+            modal.classList.add('active');
+            body.classList.add('modal-open');
+        };
+
+        const closeModal = (event) => {
+            if (event.key == "escape" || event.type == "click") {
+                modal.classList.remove('active');
+                body.classList.remove('modal-open');
+                sigPad.clear();
+                checkbox.checked = false;
             }
-        } else {
-            e.preventDefault();
-            alert('Please Sign to Checkin Child');
-            this.form.querySelector('input[type^="checkbox"').checked = false;
-        }
+        };
+
+        const submitSig = (event) => {
+            const sigInput = modal.querySelector('input[name^="sig"]');
+            if (!sigPad.isEmpty()) {
+                sigInput.value = sigPad.toDataURL("image/jpeg");
+                if (sigInput.value > 0) {
+                    console.log(sigInput.value.length);
+                    this.form.submit();
+                }
+            } else {
+                event.preventDefault();
+                alert('Please Sign to Checkin Child');
+                checkbox.checked = false;
+            }
+        };
+
+        checkbox.addEventListener('click', openModal);
+        close.addEventListener('click', closeModal);
+        submit.addEventListener('click', submitSig);
     });
-});
+}
+
+sigModal(am_checkboxes);
+sigModal(pm_checkboxes);

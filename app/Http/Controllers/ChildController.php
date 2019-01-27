@@ -49,6 +49,7 @@ class ChildController extends Controller
         ]));
 
         $child->addCheckin($child);
+        $child->addWeeklyTotal($child);
 
         return redirect('/children');
     }
