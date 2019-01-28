@@ -17,7 +17,7 @@ class Checkin extends Model
 
     public function today($child)
     {
-        $today = Checkin::where('user_id', $child->id)
+        $today = Checkin::where('user_id', $child->slug)
                         ->whereDate('created_at', today());
 
         return $today;

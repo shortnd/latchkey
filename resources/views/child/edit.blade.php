@@ -4,7 +4,7 @@
     <div class="container">
         <a href="{{ URL::previous() }}">Back</a>
         <br>
-        <form action="{{ route('children.update', $child->id) }}" method="POST">
+        <form action="{{ route('children.update', $child->slug) }}" method="POST">
             <div class="container">
                 <div class="row">
                     @csrf

@@ -43,7 +43,7 @@
                                 </td>
                                 <td>
                                     @if(!$child->today_checkin->am_checkin)
-                                    <form action="{{ route('am_checkin', $child->id) }}" method="post">
+                                    <form action="{{ route('am_checkin', $child->slug) }}" method="post">
                                         @csrf
                                         @method('PATCH')
                                         <label for="am_checkin">Check In &nbsp;
@@ -59,7 +59,7 @@
                                     @if($child->today_checkin->pm_checkin)
                                     Checked in today
                                     @else
-                                    <form action="{{ route('pm_checkin', $child->id) }}" method="post">
+                                    <form action="{{ route('pm_checkin', $child->slug) }}" method="post">
                                         @csrf
                                         @method('PATCH')
                                         <label for="pm_checkin">Check in &nbsp;
@@ -75,7 +75,7 @@
                                         {{ $child->today_checkin->getCheckoutDiffHumans() }}
                                     @elseif($child->today_checkin->pm_checkin)
                                         <strong>Student still in latchkey</strong>
-                                        <form action="{{ route('pm_checkout', $child->id) }}" method="post">
+                                        <form action="{{ route('pm_checkout', $child->slug) }}" method="post">
                                             @csrf
                                             @method('PATCH')
                                             <label for="pm_checkout">

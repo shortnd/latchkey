@@ -4,21 +4,21 @@
     <div class="container">
         <div class="row flex-column">
             {{--  REMOVE AFTER TESTING  --}}
-            <form action="{{ route('latefee', $child->id) }}" method="post">
+            <form action="{{ route('latefee', $child->slug) }}" method="post">
                 @csrf
                 <button type="submit">late fee</button>
             </form>
             <hr>
             {{--  REMOVE AFTER TESTING  --}}
             <h2>{{ $child->fullName() }} </h2>
-            <form action="{{ route('children.destroy', $child->id) }}" method="post">
+            <form action="{{ route('children.destroy', $child->slug) }}" method="post">
                 @csrf
                 @method('DELETE')
                 <div class="form-group">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </div>
             </form>
-            <a href="{{ route('children.edit', $child->id) }}" class="btn btn-secondary mb-3">Edit</a>
+            <a href="{{ route('children.edit', $child->slug) }}" class="btn btn-secondary mb-3">Edit</a>
         </div>
         <div>
             @if($child->todaysCheckin()->late_fee)
@@ -74,7 +74,7 @@
                             <tr>
                                 <td>
                                     @if(!$child->todaysCheckin()->am_checkin)
-                                    <form action="{{ route('am_checkin', $child->id) }}" method="post">
+                                    <form action="{{ route('am_checkin', $child->slug) }}" method="post">
                                         @csrf
                                         @method('PATCH')
                                         <label for="am_checkin">Check In &nbsp;
@@ -90,7 +90,7 @@
                                     @if($child->todaysCheckin()->pm_checkin)
                                     Checked in today
                                     @else
-                                    <form action="{{ route('pm_checkin', $child->id) }}" method="post">
+                                    <form action="{{ route('pm_checkin', $child->slug) }}" method="post">
                                         @csrf
                                         @method('PATCH')
                                         <label for="pm_checkin">Check in &nbsp;
@@ -106,7 +106,7 @@
                                         {{ $child->todaysCheckin()->getCheckoutDiffHumans() }}
                                     @elseif($child->todaysCheckin()->pm_checkin)
                                         <strong>Student still in latchkey</strong>
-                                        <form action="{{ route('pm_checkout', $child->id) }}" method="post">
+                                        <form action="{{ route('pm_checkout', $child->slug) }}" method="post">
                                             @csrf
                                             @method('PATCH')
                                             <label for="pm_checkout">
@@ -193,7 +193,7 @@
         </div>
         @endforeach
         @if($child->today->count() == 0)
-            <form action="/add-day/{{ $child->id }}" method="post">
+            <form action="/add-day/{{ $child->slug }}" method="post">
                 @csrf
                 <button type="submit">Add Day</button>
             </form>

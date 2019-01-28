@@ -20,7 +20,7 @@ class ChildController extends Controller
         $children = Child::get();
 
         $children->map(function($child) {
-            $child->today_checkin = $child->checkins()->where('child_id', $child->id)->whereDate('created_at', today())->first();
+            $child->today_checkin = $child->checkins()->where('child_id', $child->slug)->whereDate('created_at', today())->first();
         });
 
         return view('child.index')->withChildren($children);
@@ -48,11 +48,6 @@ class ChildController extends Controller
             'first_name' => 'required',
             'last_name' => 'required'
         ]);
-
-        // $child = Child::create($this->validate($request, [
-        //     'first_name' => 'required|max:225',
-        //     'last_name' => 'required|max:225'
-        // ]));
 
         $child = new Child;
         $child->first_name = $request->first_name;
