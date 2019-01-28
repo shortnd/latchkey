@@ -20,7 +20,7 @@ class ChildCheckinController extends Controller
     public function am_checkin(Child $child, Request $request)
     {
         $checkin = $child->todaysCheckin();
-        $checkinTotals = $child->weekly_Total();
+        $checkinTotals = $child->weeklyTotal();
 
         $checkin->update([
             'am_checkin' => $request->has(['am_checkin']),
@@ -55,7 +55,7 @@ class ChildCheckinController extends Controller
         ]);
 
         $pm_checkout = $child->todaysCheckin();
-        $checkinTotals = $child->weekly_Total();
+        $checkinTotals = $child->weeklyTotal();
 
         if ($request->has('pm_checkout')) {
             $pm_checkout->update(['pm_checkout_time' => Carbon::now(), 'pm_sig' => $request->sig]);

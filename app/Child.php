@@ -5,10 +5,33 @@ namespace App;
 use Carbon\Carbon;
 use App\Checkin;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Child extends Model
 {
+    use Sluggable;
+
     protected $guarded = [];
+
+    /**
+     * Return the sluggable configuration array
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => ['source' => 'first_name' . ' ' . 'last_name']
+        ];
+    }
+
+    /**
+     * Changes routes model to sluggable
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function fullName()
     {
@@ -44,23 +67,6 @@ class Child extends Model
         return $this->hasMany('App\CheckinTotals');
     }
 
-    // public function dailyTotal()
-    // {
-    //     return $this->checkin_totals()->whereDate('created_at', today())->first();
-    // }
-
-    /**
-     * Need to refactor this / rename
-     */
-    public function weekly_Total()
-    {
-        $now = Carbon::now();
-        $startOfWeek = $now->startOfWeek()->format('Y-m-d H:i');
-        $endOfWeek = $now->endOfWeek()->format('Y-m-d H:i');
-
-        return $this->checkin_totals()->whereBetween('created_at', [$startOfWeek, $endOfWeek])->first();
-    }
-
     protected function weeklyTotals()
     {
         $now = Carbon::now();
@@ -68,6 +74,8 @@ class Child extends Model
         $endOfWeek = $now->endOfWeek()->format('Y-m-d H:i');
         return $this->checkin_totals()->whereBetween('created_at', [$startOfWeek, $endOfWeek])->get();
     }
+
+    // FIGURE OUT WHY THERE ARE MULTIPLE
 
     public function weeklyAmCheckinTotals()
     {
@@ -109,25 +117,21 @@ class Child extends Model
         return $this->checkins()->whereBetween('created_at', [$weekStart, $weekEnd])->orderBy('created_at', 'desc')->get();
     }
 
-    public function addCheckin($child)
+    public function addCheckin()
     {
-        if ($this->todaysCheckin()) {
-            return $errors['today_checkins'] = 'Already has checkin today.';
+        if ($this->todayCheckin()) {
+            return $errors['todays_checkins'] = 'Already has checkin today.';
         } else {
-            return $this->checkins()->create([
-                'child_id' => $child->id,
-            ]);
+            return $this->checkins()->create();
         }
     }
 
-    public function addWeeklyTotal($child)
+    public function addWeeklyTotal()
     {
-        if ($this->weekly_Total()) {
-            return $errors['weekly_total'] = 'Weekly total already created';
+        if ($this->weeklyTotal()) {
+            return $errors['weeklyTotal'] = 'Weekly total already created';
         } else {
-            return $this->checkin_totals()->create([
-                'child_id' => $child->id
-            ]);
+            return $this->checkin_totals()->create();
         }
     }
 }

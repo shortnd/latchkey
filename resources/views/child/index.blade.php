@@ -39,7 +39,7 @@
                             @foreach($children as $child)
                             <tr>
                                 <td>
-                                    <a href="{{ route('children.show', $child->id) }}">{{ $child->first_name }} {{ $child->last_name }}</a>
+                                    <a href="{{ route('children.show', $child->slug) }}">{{ $child->first_name }} {{ $child->last_name }}</a>
                                 </td>
                                 <td>
                                     @if(!$child->today_checkin->am_checkin)

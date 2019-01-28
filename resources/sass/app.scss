@@ -120,17 +120,6 @@ h3 {
         z-index: 100;
         max-width:800px;
     }
-    &:after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 70%;
-        margin: 0 auto;
-        max-width: 450px;
-        height: 1px;
-        background: rgba(0,0,0,.15);
-    }
     canvas {
         margin: auto;
         position: absolute;
@@ -145,6 +134,11 @@ h3 {
         position: absolute;
         right: 15px;
         top: 15px;
+    }
+    button {
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
     }
 }
 

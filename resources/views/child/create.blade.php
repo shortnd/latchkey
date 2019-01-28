@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <form action="{{ route('children.store') }}" method="post">
+            <form action="{{ route('children.store') }}" method="post" id="new_child">
                 @csrf
                 <div class="container">
                     <div class="row">
@@ -20,6 +20,7 @@
                             </div><!--/.form-group-->
                         </div><!--/.col-md-6-->
                     </div><!--/.row-->
+                    {{-- <input type="hidden" name="full_name" id="full_name"> --}}
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -32,4 +33,9 @@
             </form>
         </div><!--./card-->
     </div><!--/.container-->
+@endsection
+
+@section('scripts')
+<script>
+</script>
 @endsection

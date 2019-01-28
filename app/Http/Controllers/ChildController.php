@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Child;
 use App\Checkin;
 use Illuminate\Http\Request;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class ChildController extends Controller
 {
@@ -43,13 +44,25 @@ class ChildController extends Controller
      */
     public function store(Request $request)
     {
-        $child = Child::create($this->validate($request, [
-            'first_name' => 'required|max:225',
-            'last_name' => 'required|max:225'
-        ]));
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required'
+        ]);
 
-        $child->addCheckin($child);
-        $child->addWeeklyTotal($child);
+        // $child = Child::create($this->validate($request, [
+        //     'first_name' => 'required|max:225',
+        //     'last_name' => 'required|max:225'
+        // ]));
+
+        $child = new Child;
+        $child->first_name = $request->first_name;
+        $child->last_name = $request->last_name;
+
+        $child->slug = SlugService::createSlug(Child::class, 'slug', $child->fullName());
+        $child->save();
+
+        $child->addCheckin();
+        $child->addWeeklyTotal();
 
         return redirect('/children');
     }
