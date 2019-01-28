@@ -20,7 +20,7 @@ class ChildController extends Controller
         $children = Child::get();
 
         $children->map(function($child) {
-            $child->today_checkin = $child->checkins()->where('child_id', $child->slug)->whereDate('created_at', today())->first();
+            $child->today_checkin = $child->checkins()->where('child_id', $child->id)->whereDate('created_at', today())->first();
         });
 
         return view('child.index')->withChildren($children);
