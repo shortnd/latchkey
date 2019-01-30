@@ -69,13 +69,8 @@ class Child extends Model
 
     protected function weeklyTotals()
     {
-        $now = Carbon::now();
-        $startOfWeek = $now->startOfWeek()->format('Y-m-d H:i');
-        $endOfWeek = $now->endOfWeek()->format('Y-m-d H:i');
-        return $this->checkin_totals()->whereBetween('created_at', [$startOfWeek, $endOfWeek])->get();
+        return $this->checkin_totals()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->get();
     }
-
-    // FIGURE OUT WHY THERE ARE MULTIPLE
 
     public function weeklyAmCheckinTotals()
     {

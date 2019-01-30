@@ -70,11 +70,8 @@ class ChildController extends Controller
      */
     public function show(Child $child)
     {
-        $startOfWeek = Carbon::now()->startOfWeek();
-        $endOfWeek = Carbon::now()->endOfWeek();
-
-        $child->today = $child->checkins()->whereBetween('created_at', [$startOfWeek, $endOfWeek])->first();
-        $child->totals = $child->checkin_totals()->whereBetween('created_at', [$startOfWeek, $endOfWeek])->first();
+        $child->today = $child->checkins()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->first();
+        $child->totals = $child->checkin_totals()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->first();
 
         return view('child.show')->withChild($child);
     }
