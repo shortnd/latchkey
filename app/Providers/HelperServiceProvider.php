@@ -23,7 +23,6 @@ class HelperServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once app_path('Helpers/StartOfWeekHelper.php');
-        require_once app_path('Helpers/EndOfWeekHelper.php');
+        require_once app_path('Helpers/WeekHelper.php');
     }
 }
