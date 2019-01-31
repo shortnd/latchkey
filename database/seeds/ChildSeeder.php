@@ -2,6 +2,7 @@
 
 use App\Child;
 use App\Checkin;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class ChildSeeder extends Seeder
@@ -14,7 +15,12 @@ class ChildSeeder extends Seeder
     public function run()
     {
         factory(Child::class, 20)->create()->each(function($child) {
-            $child->addCheckin();
+            for ($i=0; $i <= 4; $i++) { 
+                $child->checkins()->create([
+                    'created_at' => Carbon::now()->subDays($i)
+                ]);
+            }
+            // $child->addCheckin();
             $child->addWeeklyTotal();
             $child->sluggable();
         });

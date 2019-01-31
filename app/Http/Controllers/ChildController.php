@@ -116,4 +116,14 @@ class ChildController extends Controller
 
         return redirect('/children');
     }
+
+    public function weekly_totals()
+    {
+        $children = Child::paginate(10);
+        $children->map(function($child) {
+            $child->weekly_totals = $child->checkins()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->get();
+        });
+        // dd($children);
+        return view('child.weekly_totals')->withChildren($children);
+    }
 }
