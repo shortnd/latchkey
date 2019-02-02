@@ -58,7 +58,7 @@ class ChildCheckinController extends Controller
         ]);
 
         $pm_checkout = $child->todaysCheckin();
-        $checkinTotals = $child->weeklyTotal();
+        $checkinTotals = $child->weeklyTotals();
 
         if ($request->has('pm_checkout')) {
             $pm_checkout->update(['pm_checkout_time' => Carbon::now(), 'pm_sig' => $request->sig]);
