@@ -94,7 +94,7 @@ class Child extends Model
 
     public function weeklyCheckins()
     {
-        return $this->checkins()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->get();
+        return $this->checkins()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->latest()->get();
     }
 
     public function pastWeeksCheckin()
