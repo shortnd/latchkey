@@ -15,7 +15,7 @@ class ChildSeeder extends Seeder
     public function run()
     {
         factory(Child::class, 20)->create()->each(function($child) {
-            for ($i=0; $i <= 4; $i++) {
+            for ($i=0; $i <= 30; $i++) {
                 $child->checkins()->create([
                     'created_at' => Carbon::now()->subDays($i)
                 ]);

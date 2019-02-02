@@ -19,12 +19,13 @@ Route::group(['middleware' => 'auth'], function() {
     // Needs to be above resource route
     Route::get('children/weekly-totals', 'ChildController@weekly_totals')->name('weekly_totals');
     Route::resource('children', 'ChildController');
+    Route::get('children/{child}/all-checkins', 'ChildController@all_checkins');
     Route::post('add-day/{child}', 'ChildCheckinController@addNewCheckins')->name('add_child');
     Route::patch('am-checkin/{child}', 'ChildCheckinController@am_checkin')->name('am_checkin');
     Route::patch('pm-checkin/{child}', 'ChildCheckinController@pm_checkin')->name('pm_checkin');
     Route::patch('pm-checkout/{child}', 'ChildCheckinController@pm_checkout')->name('pm_checkout');
 
-    
+
     // Latefees
     Route::post('children/{child}/late-fee', 'LatefeeController@addLateFee')->name('latefee');
 });

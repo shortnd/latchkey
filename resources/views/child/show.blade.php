@@ -173,7 +173,7 @@
                                     {{ $day->created_at->format('D d') }}
                                 </td>
                                 <td>
-                                    {{ $day->am_checkin ? 'Was Checked In at '.$day->amCheckinTime() : 'Wasn\'t Checked in' }}
+                                    {{ $day->am_checkin ? 'Was Checked In at '. $day->amCheckinTime() : 'Wasn\'t Checked in' }}
                                 </td>
                                 <td>
                                     {{ $day->pm_checkin ? 'Was Checked in at '.$day->pmCheckinTime() : 'Wasn\'t Checked in' }}

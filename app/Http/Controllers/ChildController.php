@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Carbon\Carbon;
 use App\Child;
 use App\Checkin;
@@ -125,5 +126,15 @@ class ChildController extends Controller
         });
 
         return view('child.weekly_totals')->withChildren($children);
+    }
+
+    public function all_checkins(Child $child)
+    {
+
+        $child->months = $child->checkins->groupBy(function($month){
+            return Carbon::parse($month->created_at)->format('m');
+        });
+
+        return view('child.all_checkins')->withCheckins($child);
     }
 }
