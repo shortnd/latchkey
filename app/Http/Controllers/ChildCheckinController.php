@@ -14,21 +14,23 @@ class ChildCheckinController extends Controller
         return $child->addCheckin($child);
     }
 
-    /**
-     * TODO: Refactor this
-     */
     public function am_checkin(Child $child, Request $request)
     {
+        $this->validate($request, [
+            'am_checkin' => 'required',
+            'sig' => 'required'
+        ]);
+
         $checkin = $child->todaysCheckin();
-        $checkinTotals = $child->weeklyTotal();
+        $checkinTotals = $child->weeklyTotals();
 
         $checkin->update([
             'am_checkin' => $request->has(['am_checkin']),
             'am_checkin_time' => Carbon::now(),
             'am_sig' => $request->sig
         ]);
+
         $endTime = Carbon::create(today()->format('Y'), today()->format('m'), today()->format('d'), 8, 15, 0);
-        // $endTime = Carbon::createFromTime(8, 15, 0);
         $todayAMTotalHours = $checkin->am_checkin_time->diff($endTime)->format('%H.%I');
 
         $checkinTotals->update([
@@ -36,6 +38,7 @@ class ChildCheckinController extends Controller
             'am_total_hours' => $todayAMTotalHours,
             'total_amount' => 5
         ]);
+
         return back();
     }
 

@@ -67,9 +67,9 @@ class Child extends Model
         return $this->hasMany('App\CheckinTotals');
     }
 
-    protected function weeklyTotals()
+    public function weeklyTotals()
     {
-        return $this->checkin_totals()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->get();
+        return $this->checkin_totals()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->first();
     }
 
     public function weeklyAmCheckinTotals()
@@ -87,7 +87,7 @@ class Child extends Model
         return $this->weeklyTotals()->sum('total_amount');
     }
 
-    public function todayCheckin()
+    protected function todayCheckin()
     {
         return $this->checkins()->whereDate('created_at', today())->first();
     }
