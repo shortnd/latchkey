@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+{{-- TODO NEED TO FIX ISSUE WHERE ITS RETURNING ALL TOTALS THE SAME --}}
+
 @section('content')
   <div class="container">
     <div class="card">
