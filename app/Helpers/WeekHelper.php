@@ -4,10 +4,10 @@ use Carbon\Carbon;
 
 function startOfWeek()
 {
-  return Carbon::now()->startOfWeek()->format('Y-m-d H:i');
+    return Carbon::now()->startOfWeek();
 }
 
 function endOfWeek()
 {
-  return Carbon::now()->endOfWeek()->format('Y-m-d H:i');
+    return Carbon::now()->endOfWeek();
 }

@@ -153,45 +153,45 @@
             </div>
             @endif
         </div>
-        @foreach($child->weeklyCheckins() as $weekly)
-        <div class="card mb-3">
-            <div class="card-header">
-                Week of {{ $weekly->first()->created_at->startOfWeek()->format('l d') }} - {{ $weekly->first()->created_at->endOfWeek()->format('d') }}
+        @if (count($child->weeklyCheckins()))
+            <div class="card md-3">
+                <div class="card-header">
+                    Week of {{ startOfWeek()->format('M d') }}
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <th>Day of Week</th>
+                            <th>Am Checkin</th>
+                            <th>Pm Checkin</th>
+                            <th>Pm Checkout</th>
+                        </thead>
+                        <tbody>
+                            @foreach($child->weeklyCheckins() as $day)
+                            <tr>
+                                <td>
+                                    {{ $day->created_at->format('D d') }}
+                                </td>
+                                <td>
+                                    {{ $day->am_checkin ? 'Was Checked In at '.$day->amCheckinTime() : 'Wasn\'t Checked in' }}
+                                </td>
+                                <td>
+                                    {{ $day->pm_checkin ? 'Was Checked in at '.$day->pmCheckinTime() : 'Wasn\'t Checked in' }}
+                                </td>
+                                <td>
+                                    @if($day->pm_checkout_time)
+                                        Checked out at {{ $day->getCheckoutTime() }}
+                                    @else
+                                        <strong>Student was not in afternoon latchkey</strong>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <th>Day of Week</th>
-                        <th>Am Checkin</th>
-                        <th>Pm Checkin</th>
-                        <th>Pm Checkout</th>
-                    </thead>
-                    <tbody>
-                        @foreach($weekly as $day)
-                        <tr>
-                            <td>
-                                {{ $day->created_at->format('D d') }}
-                            </td>
-                            <td>
-                                {{ $day->am_checkin ? 'Was Checked In at '.$day->amCheckinTime() : 'Wasn\'t Checked in' }}
-                            </td>
-                            <td>
-                                {{ $day->pm_checkin ? 'Was Checked in at ' . $day->pmCheckinTime() : 'Wasn\'t Checked in' }}
-                            </td>
-                            <td>
-                                @if($day->pm_checkout_time)
-                                    Checked out at {{ $day->getCheckoutTime() }}
-                                @else
-                                    <strong>Student was not in afternoon latchkey</strong>
-                                @endif
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        @endforeach
+        @endif
         @if($child->today->count() == 0)
             <form action="/add-day/{{ $child->slug }}" method="post">
                 @csrf

@@ -70,8 +70,8 @@ class ChildController extends Controller
      */
     public function show(Child $child)
     {
-        $child->today = $child->checkins()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->first();
-        $child->totals = $child->checkin_totals()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->first();
+        $child->today = $child->checkins()->first();
+        $child->totals = $child->weeklyTotal();
 
         return view('child.show')->withChild($child);
     }
@@ -121,9 +121,9 @@ class ChildController extends Controller
     {
         $children = Child::paginate(10);
         $children->map(function($child) {
-            $child->weekly_totals = $child->checkins()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->get();
+            return $child->weekly_total = $child->weeklyTotal();
         });
-        // dd($children);
+
         return view('child.weekly_totals')->withChildren($children);
     }
 }

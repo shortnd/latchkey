@@ -8,16 +8,20 @@
       </div>
       <div class="card-body">
         @foreach ($children as $child)
-        <table class="table">
+        <table class="table table-striped">
           <thead>
-            {{ $child->fullName() }}
+              <tr>
+                  <th scope="col"><a href="{{ route('children.show', $child->slug) }}">{{ $child->fullName() }}</a></th>
+                  <th scope="col">Week of {{ $child->checkins()->first()->created_at->format('M m') }}</th>
+              </tr>
           </thead>
           <tbody>
-            <tr>
-            </tr>
+              <tr>
+                <td colspan="1">Total Due</td>
+                <td colspan="1">{{ $child->weekly_total }}</td>
+              </tr>
           </tbody>
         </table>
-            {{-- {{ $child }} --}}
         @endforeach
       </div>
     </div>

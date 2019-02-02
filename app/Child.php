@@ -94,13 +94,7 @@ class Child extends Model
 
     public function weeklyCheckins()
     {
-        $now = Carbon::now();
-        $monthStart = $now->startOfMonth()->format('Y-m-d H:i');
-        $monthEnd = $now->endOfMonth()->format('Y-m-d H:i');
-
-        return $this->checkins()->whereBetween('created_at', [$monthStart, $monthEnd])->orderBy('created_at', 'asc')->get()->groupBy(function($date) {
-            return Carbon::parse($date->created_at)->format('W');
-        });
+        return $this->checkins()->whereBetween('created_at', [startOfWeek(), endOfWeek()])->get();
     }
 
     public function pastWeeksCheckin()
