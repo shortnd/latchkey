@@ -174,7 +174,7 @@
                             @foreach($child->weeklyCheckins() as $day)
                             <tr>
                                 <td>
-                                    {{ $day->created_at->format('D d') }}
+                                    <a href="{{ route('child_checkin', [$child->slug, $day->id]) }}">{{ $day->created_at->format('D d') }}</a>
                                 </td>
                                 <td>
                                     {{ $day->am_checkin ? 'Was Checked In at '. $day->amCheckinTime() : 'Wasn\'t Checked in' }}

@@ -25,6 +25,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('pm-checkin/{child}', 'ChildCheckinController@pm_checkin')->name('pm_checkin');
     Route::patch('pm-checkout/{child}', 'ChildCheckinController@pm_checkout')->name('pm_checkout');
 
+    // Day for child
+    Route::get('children/{child}/{checkin}', 'ChildCheckinController@show')->name('child_checkin');
+
 
     // Latefees
     Route::post('children/{child}/late-fee', 'LatefeeController@addLateFee')->name('latefee');

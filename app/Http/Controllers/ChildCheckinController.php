@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Child;
 use App\CheckinTotals;
+use App\Checkin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -78,5 +79,21 @@ class ChildCheckinController extends Controller
             return $errors['pm_checkout'] = 'Invalid Input';
         }
         return back();
+    }
+
+    /**
+     * Show the current checkin for the selected child
+     * @param Child
+     * @param Checkin
+     *
+     * @return mixed
+     */
+    public function show(Child $child, Checkin $checkin)
+    {
+        $checkin = $child->checkins()->findOrFail($checkin->id);
+
+        return view('child.checkins.show')
+            ->withCheckin($checkin)
+            ->withChild($child);
     }
 }
