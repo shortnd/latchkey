@@ -2,6 +2,17 @@
 
 {{-- TODO NEED TO FIX ISSUE WHERE ITS RETURNING ALL TOTALS THE SAME --}}
 
+@push('styles')
+    <style>
+        .table {
+            table-layout: fixed;
+        }
+        .pagination {
+            justify-content: center;
+        }
+    </style>
+@endpush
+
 @section('content')
   <div class="container">
     <div class="card">
@@ -20,7 +31,9 @@
           <tbody>
               <tr>
                 <td colspan="1">Total Due</td>
-                <td colspan="1">{{ $child->weekly_total }}</td>
+                <td colspan="1">
+                        {{ $child->weeklyTotal() > 0 ? '$'.$child->weeklyTotal() : 'Nothing Owed this week' }}
+                </td>
               </tr>
           </tbody>
         </table>

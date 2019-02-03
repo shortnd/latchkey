@@ -84,7 +84,7 @@ class Child extends Model
 
     public function weeklyTotal()
     {
-        return $this->weeklyTotals()->sum('total_amount');
+        return $this->weeklyTotals()->total_amount;
     }
 
     protected function todayCheckin()
@@ -117,7 +117,7 @@ class Child extends Model
 
     public function addWeeklyTotal()
     {
-        if ($this->weeklyTotal()) {
+        if ($this->weeklyTotals()) {
             return $errors['weeklyTotal'] = 'Weekly total already created';
         } else {
             return $this->checkin_totals()->create();

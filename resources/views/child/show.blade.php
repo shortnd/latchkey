@@ -4,21 +4,25 @@
     <div class="container">
         <div class="row flex-column">
             {{--  REMOVE AFTER TESTING  --}}
-            <form action="{{ route('latefee', $child->slug) }}" method="post">
+            {{-- <form action="{{ route('latefee', $child->slug) }}" method="post">
                 @csrf
                 <button type="submit">late fee</button>
             </form>
-            <hr>
+            <hr> --}}
             {{--  REMOVE AFTER TESTING  --}}
-            <h2>{{ $child->fullName() }} </h2>
-            <form action="{{ route('children.destroy', $child->slug) }}" method="post">
-                @csrf
-                @method('DELETE')
-                <div class="form-group">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </div>
-            </form>
-            <a href="{{ route('children.edit', $child->slug) }}" class="btn btn-secondary mb-3">Edit</a>
+            <div class="container d-flex justify-content-between align-items-center">
+                <h2 class="d-inline-block">{{ $child->fullName() }}</h2> <a class="d-inline-block" href="{{ route('all_checkins', $child->slug) }}">All Checkins</a>
+            </div>
+            <div class="container mb-3 d-flex justify-content-between align-items-center">
+                <a href="{{ route('children.edit', $child->slug) }}" class="btn btn-secondary">Edit</a>
+                <form class="form-inline" action="{{ route('children.destroy', $child->slug) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
         </div>
         <div>
             @if($child->todaysCheckin()->late_fee)
