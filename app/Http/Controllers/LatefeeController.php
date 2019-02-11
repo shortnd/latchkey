@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Child;
-use App\Checkin;
-use Illuminate\Http\Request;
 
 class LatefeeController extends Controller
 {

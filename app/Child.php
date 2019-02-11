@@ -3,9 +3,8 @@
 namespace App;
 
 use Carbon\Carbon;
-use App\Checkin;
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Model;
 
 class Child extends Model
 {

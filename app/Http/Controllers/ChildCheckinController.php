@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Child;
-use App\CheckinTotals;
 use App\Checkin;
+use App\Child;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -47,7 +46,7 @@ class ChildCheckinController extends Controller
     {
         $pm_checkin = $child->todaysCheckin();
 
-        $time = Carbon::create(today()->format('Y'),today()->format('m'),today()->format('d'),15,0,0);
+        $time = Carbon::create(today()->format('Y'), today()->format('m'), today()->format('d'), 15, 0, 0);
         $pm_checkin->update(['pm_checkin' => $request->has(['pm_checkin']), 'pm_checkin_time' => $time]);
         return back();
     }
@@ -74,7 +73,6 @@ class ChildCheckinController extends Controller
                 'total_hours' => $rollingTotalHours,
                 'total_amount' => $rollingTotalAmount
             ]);
-
         } else {
             return $errors['pm_checkout'] = 'Invalid Input';
         }

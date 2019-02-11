@@ -1,7 +1,7 @@
 <?php
 
-use Faker\Generator as Faker;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Faker\Generator as Faker;
 
 $factory->define(App\Child::class, function (Faker $faker) {
     $first_name = $faker->firstname();

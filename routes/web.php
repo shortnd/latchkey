@@ -11,11 +11,13 @@
 |
 */
 
-Route::get('/', function () {return view('welcome');});
+Route::get('/', function () {
+    return view('welcome');
+});
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 // TODO start working on users next
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
     // Needs to be above resource route
     Route::get('children/weekly-totals', 'ChildController@weekly_totals')->name('weekly_totals');
     Route::resource('children', 'ChildController');
@@ -34,7 +36,7 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 // Latchkey Policy & Contract pages
-Route::group(['prefix' => 'policy'], function() {
+Route::group(['prefix' => 'policy'], function () {
     Route::get('', 'PolicyController@index');
     Route::get('edit', 'PolicyController@edit');
     Route::put('', 'PolicyController@update');

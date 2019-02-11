@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Carbon\Carbon;
 use App\Child;
-use App\Checkin;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Http\Request;
 
 class ChildController extends Controller
 {
@@ -20,7 +18,7 @@ class ChildController extends Controller
     {
         $children = Child::get();
 
-        $children->map(function($child) {
+        $children->map(function ($child) {
             $child->today_checkin = $child->checkins()->where('child_id', $child->id)->whereDate('created_at', today())->first();
         });
 
@@ -121,7 +119,7 @@ class ChildController extends Controller
     public function weekly_totals()
     {
         $children = Child::paginate(10);
-        $children->map(function($child) {
+        $children->map(function ($child) {
             return $child->weekly_total = $child->weeklyTotal();
         });
 
@@ -130,8 +128,7 @@ class ChildController extends Controller
 
     public function all_checkins(Child $child)
     {
-
-        $child->months = $child->checkins->groupBy(function($month){
+        $child->months = $child->checkins->groupBy(function ($month) {
             return Carbon::parse($month->created_at)->format('m');
         });
 

@@ -3,7 +3,6 @@
 namespace App;
 
 use Carbon\Carbon;
-use App\Child;
 use Illuminate\Database\Eloquent\Model;
 
 class Checkin extends Model
