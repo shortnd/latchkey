@@ -21,7 +21,6 @@ class ChildController extends Controller
         $children->map(function ($child) {
             $child->today_checkin = $child->checkins()->where('child_id', $child->id)->whereDate('created_at', today())->first();
         });
-
         return view('child.index')->withChildren($children);
     }
 
