@@ -2,40 +2,52 @@
 
 @section('content')
     <div class="container">
-        @foreach ($checkins as $month)
-            <div class="card">
-                <div class="card-header">
-                    {{ $month->first()->created_at->format('M') }}
-                </div>
-                <div class="card-body">
-                    @foreach ($month as $checkin)
-                    <table class="table">
-                        <thead>
-                            <th>Day</th>
-                            <th>Am Checkin</th>
-                            <th>PM Checkin</th>
-                            <th>PM Checkout</th>
-                        </thead>
-                        <tbody>
+        @foreach($checkins as $week)
+        <div class="card mb-3">
+            <div class="card-header">
+               Week of {{$week->first()->created_at->format('M j')}}
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <th>Day</th>
+                        <th>Am Checkin</th>
+                        <th>Pm Checkin</th>
+                        <th>Pm Checkout</th>
+                    </thead>
+                    <tbody>
+                        @foreach($week as $day)
                             <tr>
                                 <td>
-                                    {{ $checkin->created_at->format('M j') }}
+                                    {{ $day->created_at->format('M j') }}
                                 </td>
                                 <td>
-                                    {{ $checkin->am_checkin }}
+                                    {{ $day->am_checkin ? 'Was Checked in at '. $day->amCheckinTime() : 'Wasn\'t Checked in' }}
                                 </td>
                                 <td>
-                                    {{ $checkin->pm_checkin }}
+                                    {{ $day->pm_checkin ? 'Was Checked in at '. $day->pmCheckinTime() : 'Wasn\'t Checked in' }}
                                 </td>
                                 <td>
-                                    {{ $checkin->pm_checkout ? 'Not checkin in for PM Latchkey' : $checkin->pm_checkout_time }}
+                                    {{ $day->pm_checkout ? 'Checked out at '. $day->getCheckoutTime() : 'Student was not in afternoon latchkey' }}
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                    @endforeach
-                </div>
+                            @if($day->am_sig || $day->pm_sig)
+                            <tr class="container">
+                                <td colspan="2" class="text-center">
+                                    <strong class="d-block">Am Signature</strong>
+                                    <img src="{{ $day->am_sig }}" alt="am signature" class="signature" />
+                                </td>
+                                <td colspan="2" class="text-center">
+                                    <strong class="d-block">Pm Signature</strong>
+                                    <img src="{{ $day->pm_sig }}" alt="pm signature" class="signature">
+                                </td>
+                            </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
+        </div>
         @endforeach
     </div>
 @endsection

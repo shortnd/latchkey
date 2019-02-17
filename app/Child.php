@@ -73,12 +73,12 @@ class Child extends Model
 
     public function weeklyAmCheckinTotals()
     {
-        return $this->weeklyTotals()->sum('am_total_hours');
+        return $this->weeklyTotals()->am_total_hours;
     }
 
     public function weeklyCheckinTotals()
     {
-        return $this->weeklyTotals()->sum('total_hours');
+        return $this->weeklyTotals()->total_hours;
     }
 
     public function weeklyTotal()

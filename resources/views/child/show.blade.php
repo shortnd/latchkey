@@ -7,7 +7,7 @@
                 <h2 class="d-inline-block">{{ $child->fullName() }}</h2>
                 <div class="d-inline-block">
                     <a class="d-block" href="{{ route('all_checkins', $child->slug) }}">All Checkins</a>
-                    <a class="d-block" href="{{ route('search-form', $child->slug) }}" class="btn btn-link">Past Checkins</a>
+                    <a class="d-block" href="{{ route('search-form', $child->slug) }}" class="btn btn-link">Search Checkins</a>
                 </div>
             </div>
             <div class="container mb-3 d-flex justify-content-between align-items-center">

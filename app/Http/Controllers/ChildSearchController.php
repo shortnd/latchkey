@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Child;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ChildSearchController extends Controller
 {
@@ -19,10 +20,12 @@ class ChildSearchController extends Controller
             'end_date' => 'required'
         ]);
 
-        $checkins = $child->checkins()->whereBetween('created_at', [$request->start_date, $request->end_date])->get();
+        $checkins = $child->checkins()->whereBetween('created_at', [$request->start_date, $request->end_date])->orderBy('created_at', 'desc')->get();
+
         $checkins = $checkins->groupBy(function($checkin) {
-            return Carbon::parse($checkin->created_at)->format('m');
+            return Carbon::parse($checkin->created_at)->format('W');
         });
+
         return view('child.search.show', ['checkins' => $checkins]);
     }
 }
