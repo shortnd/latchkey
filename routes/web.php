@@ -16,6 +16,10 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix' => 'children'], function() {
+    Route::get('{child}/search-form', 'ChildSearchController@index');
+    Route::get('{child}/search-form/results', 'ChildSearchController@show')->name('search-results');
+});
 // TODO start working on users next
 Route::group(['middleware' => 'auth'], function () {
     // Needs to be above resource route
