@@ -39,7 +39,8 @@ class DailyChildCheckins extends Command
     public function handle()
     {
         Child::get()->each(function ($child) {
-            $child->addCheckin($child);
+            $child->addCheckin();
+            $child->addWeeklyTotal();
         });
     }
 }

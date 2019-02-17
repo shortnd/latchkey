@@ -16,7 +16,7 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $children = Child::get();
+        $children = Child::orderBy('last_name')->get();
 
         $children->map(function ($child) {
             $child->today_checkin = $child->checkins()->where('child_id', $child->id)->whereDate('created_at', today())->first();

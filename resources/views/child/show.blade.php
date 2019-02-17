@@ -3,15 +3,12 @@
 @section('content')
     <div class="container">
         <div class="row flex-column">
-            {{--  REMOVE AFTER TESTING  --}}
-            {{-- <form action="{{ route('latefee', $child->slug) }}" method="post">
-                @csrf
-                <button type="submit">late fee</button>
-            </form>
-            <hr> --}}
-            {{--  REMOVE AFTER TESTING  --}}
             <div class="container d-flex justify-content-between align-items-center">
-                <h2 class="d-inline-block">{{ $child->fullName() }}</h2> <a class="d-inline-block" href="{{ route('all_checkins', $child->slug) }}">All Checkins</a>
+                <h2 class="d-inline-block">{{ $child->fullName() }}</h2>
+                <div class="d-inline-block">
+                    <a class="d-block" href="{{ route('all_checkins', $child->slug) }}">All Checkins</a>
+                    <a class="d-block" href="{{ route('search-form', $child->slug) }}" class="btn btn-link">Past Checkins</a>
+                </div>
             </div>
             <div class="container mb-3 d-flex justify-content-between align-items-center">
                 <a href="{{ route('children.edit', $child->slug) }}" class="btn btn-secondary">Edit</a>

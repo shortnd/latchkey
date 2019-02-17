@@ -16,10 +16,9 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-Route::group(['prefix' => 'children'], function() {
-    Route::get('{child}/search-form', 'ChildSearchController@index');
-    Route::get('{child}/search-form/results', 'ChildSearchController@show')->name('search-results');
-});
+// Route::group(['prefix' => 'children'], function() {
+
+// });
 // TODO start working on users next
 Route::group(['middleware' => 'auth'], function () {
     // Needs to be above resource route
@@ -34,6 +33,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Day for child
     Route::get('children/{child}/{checkin}', 'ChildCheckinController@show')->name('child_checkin');
 
+    // Search for past checkins
+    Route::get('{child}/search-form', 'ChildSearchController@index')->name('search-form');
+    Route::get('{child}/search-form/results', 'ChildSearchController@show')->name('search-results');
 
     // Latefees
     Route::post('children/{child}/late-fee', 'LatefeeController@addLateFee')->name('latefee');
