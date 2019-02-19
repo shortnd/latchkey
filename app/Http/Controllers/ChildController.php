@@ -82,7 +82,10 @@ class ChildController extends Controller
      */
     public function edit(Child $child)
     {
-        return view('child.edit')->withChild($child);
+        if (auth()->user()->isA('superuser') || auth()->user()->isAn('admin')) {
+            return view('child.edit')->withChild($child);
+        }
+        return back()->withErrors('Unauthorized');
     }
 
     /**

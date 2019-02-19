@@ -12,6 +12,8 @@ class SuperUserSeeder extends Seeder
      */
     public function run()
     {
-        User::first()->assign('superuser');
+        User::first()
+            ->assign('superuser')
+            ->allow('edit-children');
     }
 }

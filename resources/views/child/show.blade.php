@@ -10,6 +10,7 @@
                     <a class="d-block" href="{{ route('search-form', $child->slug) }}" class="btn btn-link">Search Checkins</a>
                 </div>
             </div>
+            @can('edit-children')
             <div class="container mb-3 d-flex justify-content-between align-items-center">
                 <a href="{{ route('children.edit', $child->slug) }}" class="btn btn-secondary">Edit</a>
                 <form class="form-inline" action="{{ route('children.destroy', $child->slug) }}" method="post">
@@ -20,6 +21,7 @@
                     </div>
                 </form>
             </div>
+            @endcan
         </div>
         <div>
             @if($child->todaysCheckin()->late_fee)
