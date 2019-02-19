@@ -12,7 +12,8 @@
         "cviebrock/eloquent-sluggable": "^4.6",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "silber/bouncer": "v1.0.0-rc.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
