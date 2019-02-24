@@ -61,11 +61,6 @@ class Child extends Model
         return round($total);
     }
 
-    // public function addLateFee()
-    // {
-    //     $this->;
-    // }
-
     public function checkin_totals()
     {
         return $this->hasMany('App\CheckinTotals');

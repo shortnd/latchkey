@@ -36,9 +36,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Search for past checkins
     Route::get('{child}/search-form', 'ChildSearchController@index')->name('search-form');
     Route::get('{child}/search-form/results', 'ChildSearchController@show')->name('search-results');
-
-    // Latefees
-    Route::post('children/{child}/late-fee', 'LatefeeController@addLateFee')->name('latefee');
 });
 
 // Latchkey Policy & Contract pages

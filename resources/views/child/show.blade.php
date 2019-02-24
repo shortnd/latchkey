@@ -26,7 +26,7 @@
         <div>
             @if($child->todaysCheckin()->late_fee)
                 <div class="alert alert-danger">
-                    Latefee(s) added today
+                    Latefee(s) added today {{ $child->todaysCheckin()->late_fee }}
                 </div>
             @endif
             <div class="card mb-3">
