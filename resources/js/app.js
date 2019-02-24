@@ -68,10 +68,6 @@ function sigModal(checkboxes) {
                     console.log(sigInput.value.length);
                     this.form.submit();
                 }
-            } else {
-                event.preventDefault();
-                alert('Please Sign to Checkin Child');
-                checkbox.checked = false;
             }
         };
 

@@ -73150,11 +73150,12 @@ function sigModal(checkboxes) {
 
           _this.form.submit();
         }
-      } else {
-        event.preventDefault();
-        alert('Please Sign to Checkin Child');
-        checkbox.checked = false;
-      }
+      } //  else {
+      //     event.preventDefault();
+      //     alert('Please Sign to Checkin Child');
+      //     checkbox.checked = false;
+      // }
+
     };
 
     checkbox.addEventListener('click', openModal);

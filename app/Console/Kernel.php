@@ -24,9 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-        $schedule->command('children:dailytable')->daily()->weekdays();
+        $schedule->command('children:dailytable')->dailyAt('00:01')->weekdays();
     }
 
     /**
