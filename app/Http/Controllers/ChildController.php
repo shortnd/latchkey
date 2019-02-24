@@ -6,6 +6,7 @@ use App\Child;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
+use function GuzzleHttp\Promise\each;
 
 class ChildController extends Controller
 {
