@@ -16,9 +16,7 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-// Route::group(['prefix' => 'children'], function() {
 
-// });
 // TODO start working on users next
 Route::group(['middleware' => 'auth'], function () {
     // Needs to be above resource route
