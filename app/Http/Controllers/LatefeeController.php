@@ -14,7 +14,7 @@ class LatefeeController extends Controller
             'late_fee' => + 1
         ]);
 
-        if ($child->todaysCheckin()->late_fee >= 1) {
+        if ($lateFee >= 1) {
             $child->dailyTotal()->update([
                 'total_amount' => + 10
             ]);
