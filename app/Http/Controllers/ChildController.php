@@ -6,7 +6,6 @@ use App\Child;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
-use function GuzzleHttp\Promise\each;
 
 class ChildController extends Controller
 {
@@ -69,9 +68,14 @@ class ChildController extends Controller
      */
     public function show(Child $child)
     {
-        $child->today = $child->checkins()->first();
-        $child->totals = $child->weeklyTotal();
+        $child->with(['checkins' => function($query) {
+            $query->whereDate('created_at', today())->first();
+        }])->with(['checkin_totals' => function($query) {
+            $query->whereBetween('created_at', [startOfWeek(), endOfWeek()])->first();
+        }]);
 
+
+        // dd($child);
         return view('child.show')->withChild($child);
     }
 
@@ -83,10 +87,10 @@ class ChildController extends Controller
      */
     public function edit(Child $child)
     {
-        if (auth()->user()->isA('superuser') || auth()->user()->isAn('admin')) {
-            return view('child.edit')->withChild($child);
-        }
-        return back()->withErrors('Unauthorized');
+        // if (auth()->user()->isA('superuser') || auth()->user()->isAn('admin')) {
+        return view('child.edit')->withChild($child);
+        // }
+        // return back()->withErrors('Unauthorized');
     }
 
     /**

@@ -71,6 +71,11 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+                                    @role('superuser|admin')
+                                        <span class="dropdown-item">Superuser|Admin</span>
+                                    @else
+                                        <span class="dropdown-item">No role</span>
+                                    @endrole
                                 </div>
                             </li>
                         @endguest

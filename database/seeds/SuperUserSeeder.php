@@ -2,6 +2,7 @@
 
 use App\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class SuperUserSeeder extends Seeder
 {
@@ -12,8 +13,8 @@ class SuperUserSeeder extends Seeder
      */
     public function run()
     {
+        $superuser = Role::create(['name' => 'superuser']);
         User::first()
-            ->assign('superuser')
-            ->allow('edit-children');
+            ->assignRole($superuser);
     }
 }
