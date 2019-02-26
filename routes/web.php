@@ -13,13 +13,17 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'users', 'middleware' => 'role:superuser|admin'], function() {
     Route::get('/', 'UserController@index');
-    Route::get('register/invitations', 'InvitationsController@showRequestedInvitations');
+    Route::get('register/invitations', 'InvitationsController@showRequestedInvitations')->name('showRequests');
+});
+Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
+    Route::get('{user}/edit', 'UserController@edit')->name('user.edit');
+    Route::put('{users}/update-name', 'UserController@updatedName')->name('user.update-name');
 });
 Route::post('invitations', 'InvitationsController@store')->middleware('guest')->name('storeInvitation');
 

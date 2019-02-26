@@ -62,6 +62,16 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @role('superuser|admin')
+                                        <a href="/users" class="dropdown-item">View All Users</a>
+                                    @else
+                                        <span class="dropdown-item">No role</span>
+                                    @endrole
+                                    @auth
+                                        <a href="{{route('user.edit', Auth::user()->id)}}" class="dropdown-item">
+                                            Edit Account
+                                        </a>
+                                    @endauth
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -71,11 +81,6 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
-                                    @role('superuser|admin')
-                                        <span class="dropdown-item">Superuser|Admin</span>
-                                    @else
-                                        <span class="dropdown-item">No role</span>
-                                    @endrole
                                 </div>
                             </li>
                         @endguest
