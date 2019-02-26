@@ -42,45 +42,47 @@
                                     <a href="{{ route('children.show', $child->slug) }}">{{ $child->first_name }} {{ $child->last_name }}</a>
                                 </td>
                                 <td>
-                                    @if(!$child->today_checkin->am_checkin)
+                                    {{-- {{ $child->checkins->first()->am_checkin}} --}}
+                                    @if(!$child->checkins->first()->am_checkin)
                                     <form action="{{ route('am_checkin', $child->slug) }}" method="post">
                                         @csrf
                                         @method('PATCH')
                                         <label for="am_checkin">Check In &nbsp;
-                                            <input type="checkbox" name="am_checkin" {{ $child->today_checkin->am_checkin ? 'checked' : '' }} {{ $child->today_checkin->am_disabled() ? 'disabled' : '' }} >
+                                            <input type="checkbox" name="am_checkin" {{ $child->checkins->first()->am_checkin ? 'checked' : '' }}  {{ $child->checkins->first()->am_disabled() ? 'disabled': '' }} >
+                                            {{-- {{ $child->today_checkin->am_disabled() ? 'disabled' : '' }} --}}
                                         </label>
                                         @signituremodal
                                     </form>
                                     @else
-                                        Checked in at {{ $child->today_checkin->amCheckinTime() }}
+                                        Checked in at {{ $child->checkins->first()->amCheckinTime() }}
                                     @endif
                                 </td>
                                 <td>
-                                    @if($child->today_checkin->pm_checkin)
+                                    @if($child->checkins->first()->pm_checkin)
                                     Checked in today
                                     @else
                                     <form action="{{ route('pm_checkin', $child->slug) }}" method="post">
                                         @csrf
                                         @method('PATCH')
                                         <label for="pm_checkin">Check in &nbsp;
-                                            <input type="checkbox" name="pm_checkin" id="pm_checkin" {{ $child->today_checkin->pm_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $child->today_checkin->pm_disabled() ? 'disabled' : '' }}>
+                                            <input type="checkbox" name="pm_checkin" id="pm_checkin" {{ $child->checkins->first()->pm_checkin ? 'checked' : '' }} onchange="this.form.submit()" {{ $child->checkins->first()->pm_disabled() ? 'disabled' : '' }}>
                                         </label>
                                     </form>
                                     @endif
                                 </td>
                                 <td>
-                                    @if($child->today_checkin->pm_checkout_time)
-                                        {{ $child->today_checkin->getCheckoutTime() }}
+                                    @if($child->checkins->first()->pm_checkout_time)
+                                        {{ $child->checkins->first()->getCheckoutTime() }}
                                         <br>
-                                        {{ $child->today_checkin->getCheckoutDiffHumans() }}
-                                    @elseif($child->today_checkin->pm_checkin)
+                                        {{ $child->checkins->first()->getCheckoutDiffHumans() }}
+                                    @elseif($child->checkins->first()->pm_checkin)
                                         <strong>Student still in latchkey</strong>
                                         <form action="{{ route('pm_checkout', $child->slug) }}" method="post">
                                             @csrf
                                             @method('PATCH')
                                             <label for="pm_checkout">
                                                 Checkout &nbsp;
-                                                <input type="checkbox" name="pm_checkout" id="pm_checkout" {{ $child->today_checkin->pm_checkout ? 'checked' : '' }}>
+                                                <input type="checkbox" name="pm_checkout" id="pm_checkout" {{ $child->checkins->first()->pm_checkout ? 'checked' : '' }}>
                                             </label>
                                             @signituremodal
                                         </form>

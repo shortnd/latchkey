@@ -17,6 +17,8 @@ Route::get('/', function () {
 Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/users', 'UserController@index');
+
 // TODO start working on users next
 // Add users controller to add new users
 // edit users
