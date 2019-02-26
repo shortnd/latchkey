@@ -13,7 +13,7 @@
                         <h3 class="h6">Edit basic Info</h3>
                         <form action="{{route('user.update-name', $user->id)}}" method="post">
                             @csrf
-                            @method('PUT')
+                            @method('PATCH')
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 text-md-right col-form-label">Name</label>
                                 <div class="col-md-6">

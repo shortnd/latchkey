@@ -32,13 +32,11 @@ class UserController extends Controller
 
     public function updatedName(Request $request, User $user)
     {
-        // dd($request->name);
-        // $this->validate($request, [
-        //     'name' => 'required|min:2|max:255'
-        // ]);
-        dd($user->update($this->validate($request, [
+        $this->validate($request, [
             'name' => 'required|min:2|max:255'
-        ])));
+        ]);
+
+        $user->update(['name' => $request->name]);
 
         return redirect()->back();
     }
