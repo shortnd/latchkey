@@ -18,6 +18,12 @@ Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
 
 // TODO start working on users next
+// Add users controller to add new users
+// edit users
+// see info
+// add more roles
+
+// Also close Registration to invite only
 Route::group(['middleware' => 'auth'], function () {
     // Needs to be above resource route
     Route::get('children/weekly-totals', 'ChildController@weekly_totals')->name('weekly_totals');
