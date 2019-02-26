@@ -29,7 +29,8 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                <input type="email" class="form-control disabled" value="{{ $email }}" disabled>
+                                <input id="email" type="hidden" class="form-control disabled" name="email" value="{{ $email }}">
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">

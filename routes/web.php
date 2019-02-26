@@ -17,8 +17,17 @@ Route::get('/', function () {
 Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/users', 'UserController@index');
+Route::group(['prefix' => 'users', 'middleware' => 'role:superuser|admin'], function() {
+    Route::get('/', 'UserController@index');
+    Route::get('register/invitations', 'InvitationsController@showRequestedInvitations');
+});
+Route::post('invitations', 'InvitationsController@store')->middleware('guest')->name('storeInvitation');
 
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')
+    ->name('register')
+    ->middleware('hasInvitation');
+
+Route::get('register/request', 'Auth\RegisterController@requestInvitation')->name('requestInvitation');
 // TODO start working on users next
 // Add users controller to add new users
 // edit users

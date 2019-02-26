@@ -7,6 +7,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Invitation;
 
 class RegisterController extends Controller
 {
@@ -68,5 +70,19 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function requestInvitation()
+    {
+        return view('auth.request');
+    }
+
+    public function showRegistrationForm(Request $request)
+    {
+        $invitation_token = $request->get('invitation_token');
+        $invitation = Invitation::where('invitation_token', $invitation_token)->firstOrFail();
+        $email = $invitation->email;
+
+        return view('auth.register')->withEmail($email);
     }
 }

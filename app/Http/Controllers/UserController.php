@@ -20,6 +20,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::whereNot('user_id', Auth::user()->id)->get();
+        return User::where('id','!=', Auth::user()->id)->get();
     }
 }
