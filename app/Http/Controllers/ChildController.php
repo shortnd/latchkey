@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Child;
 use Carbon\Carbon;
-use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 
 class ChildController extends Controller
@@ -50,7 +49,6 @@ class ChildController extends Controller
         $child->first_name = $request->first_name;
         $child->last_name = $request->last_name;
 
-        $child->slug = SlugService::createSlug(Child::class, 'slug', $child->fullName());
         $child->save();
 
         $child->addCheckin();

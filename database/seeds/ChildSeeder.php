@@ -20,7 +20,6 @@ class ChildSeeder extends Seeder
                 ]);
             }
             $child->addWeeklyTotal();
-            $child->sluggable();
         });
     }
 }

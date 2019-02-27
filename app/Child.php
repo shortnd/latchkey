@@ -3,12 +3,13 @@
 namespace App;
 
 use Carbon\Carbon;
-use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 
 class Child extends Model
 {
-    use Sluggable;
+    use HasSlug;
 
     protected $guarded = [];
 
@@ -17,11 +18,12 @@ class Child extends Model
      *
      * @return array
      */
-    public function sluggable()
+
+    public function getSlugOptions(): \Spatie\Sluggable\SlugOptions
     {
-        return [
-            'slug' => ['source' => 'first_name' . ' ' . 'last_name']
-        ];
+        return SlugOptions::create()
+            ->generateSlugsFrom(['first_name', 'last_name'])
+            ->saveSlugsTo('slug');
     }
 
     /**
