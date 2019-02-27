@@ -27,7 +27,11 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('users.edit')->withUser($user);
+        // TODO: add a policy or find another way to check here
+        if($user->slug == auth()->user()->slug or auth()->user()->hasRole('superuser')) {
+            return view('users.edit')->withUser($user);
+        }
+        return abort(403);
     }
 
     public function updatedName(Request $request, User $user)
