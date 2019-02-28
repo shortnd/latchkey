@@ -11,7 +11,7 @@
                     </div>
                     <div class="card-body">
                         <h3 class="h6">Edit basic Info</h3>
-                        <form action="{{route('user.update-name', $user->id)}}" method="post">
+                        <form action="{{route('user.update-name', $user->slug)}}" method="post">
                             @csrf
                             @method('PATCH')
                             <div class="form-group row">
@@ -20,6 +20,14 @@
                                     <input type="text" name="name" id="name" class="form-control" value="{{ $user->name }}">
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4 text-md-right col-form-label">Username:</label>
+                                <div class="col-md-6">
+                                    <input type="text" name="username" id="username" value="{{$user->username}}" class="form-control" disabled>
+                                </div>
+                            </div>
+
                             <div class="form-group text-right">
                                 <button class="btn btn-link" type="submit">Update</button>
                             </div>
