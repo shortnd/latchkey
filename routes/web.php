@@ -10,37 +10,32 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-Auth::routes();
-// Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'users', 'middleware' => 'role:superuser|admin'], function() {
     Route::get('/', 'UserController@index');
     Route::get('register/invitations', 'InvitationsController@showRequestedInvitations')->name('showRequests');
 });
+
 Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     Route::get('{user}/edit', 'UserController@edit')->name('user.edit');
     Route::patch('{user}/update-name', 'UserController@updatedName')->name('user_update_name');
     Route::patch('{user}/update-email', 'UserController@updateEmail')->name('user_update_email');
     Route::patch('{user}/update-password', 'UserController@updatePassword')->name('user_update_password');
 });
-Route::post('invitations', 'InvitationsController@store')->middleware('guest')->name('storeInvitation');
 
+Route::post('invitations', 'InvitationsController@store')->middleware('guest')->name('storeInvitation');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')
     ->name('register')
     ->middleware('hasInvitation');
 
 Route::get('register/request', 'Auth\RegisterController@requestInvitation')->name('requestInvitation');
-// TODO start working on users next
-// Add users controller to add new users
-// edit users
-// see info
-// add more roles
+// TODO Allow superuser/admin ability to add roles to new users
 
-// Also close Registration to invite only
 Route::group(['middleware' => 'auth'], function () {
     // Needs to be above resource route
     Route::get('children/weekly-totals', 'ChildController@weekly_totals')->name('weekly_totals');
