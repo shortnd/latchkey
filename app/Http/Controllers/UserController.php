@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -57,6 +58,22 @@ class UserController extends Controller
             return redirect()->back();
         } else {
             $errors = array('email' => 'Email did not match our records. Please try again');
+            return redirect()->back()->withErrors($errors);
+        }
+    }
+
+    public function updatePassword(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'current_password' => 'required',
+            'password' => 'required|confirmed|min:6|max:60'
+        ]);
+
+        if (Hash::check($request->current_password, $user->password)) {
+            $user->update(['password' => Hash::make($request->password)]);
+            return redirect()->back();
+        } else {
+            $errors = array('current_password' => "Password did not match our records. Please try again later.");
             return redirect()->back()->withErrors($errors);
         }
     }

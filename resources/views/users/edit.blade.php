@@ -21,12 +21,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            {{-- <div class="form-group row">
                                 <label class="col-md-4 text-md-right col-form-label">Username:</label>
                                 <div class="col-md-6">
                                     <input type="text" name="username" id="username" value="{{$user->username}}" class="form-control" disabled>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="form-group text-right">
                                 <button class="btn btn-link" type="submit">Update</button>
@@ -35,7 +35,7 @@
                         <hr>
 
                         <h3 class="h6">Update Email</h3>
-                        @if($errors->any())
+                        @if($errors->has('email'))
                             <div class="alert alert-danger">
                                 @foreach ($errors->all() as $error)
                                     {{ $error }}
@@ -76,30 +76,37 @@
 
                         <hr>
                         <h3 class="h6">Change Password</h3>
-                        <form action="" method="post">
+                        @if($errors->has('password') || $errors->has('current_password'))
+                        <div class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                            {{ $error }}
+                            @endforeach
+                        </div>
+                        @endif
+                        <form action="{{route('user_update_password', $user->slug)}}" method="post">
                             @csrf
-
+                            @method('PATCH')
                             <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                <label for="current_password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                                 <div class="col-md-6">
-                                    <input type="password" name="password" id="password" class="form-control" placeholder="Confirm Current Password">
+                                    <input type="password" name="current_password" id="current_password" class="form-control" placeholder="Confirm Current Password">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="new_password" class="col-md-4 text-md-right col-form-label">New Password</label>
+                                <label for="password" class="col-md-4 text-md-right col-form-label">New Password</label>
 
                                 <div class="col-md-6">
-                                    <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password">
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="New Password">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="new_password_confirmed" class="col-md-4 text-md-right col-form-label">Confirm New Password</label>
+                                <label for="password_confirmation" class="col-md-4 text-md-right col-form-label">Confirm New Password</label>
 
                                 <div class="col-md-6">
-                                    <input type="password" name="new_password_confirmed" id="new_password_confirmed" class="form-control" placeholder="Confirm New Password">
+                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Confirm New Password">
                                 </div>
                             </div>
 
