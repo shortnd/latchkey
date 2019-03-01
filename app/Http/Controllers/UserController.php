@@ -44,4 +44,20 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+    public function updateEmail(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'current_email' => 'required|email',
+            'email' => 'required|email|unique:users|confirmed',
+        ]);
+
+        if($user->email === $request->current_email) {
+            $user->update(['email' => $request->email]);
+            return redirect()->back();
+        } else {
+            $errors = array('email' => 'Email did not match our records. Please try again');
+            return redirect()->back()->withErrors($errors);
+        }
+    }
 }

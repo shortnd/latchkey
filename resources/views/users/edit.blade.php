@@ -11,7 +11,7 @@
                     </div>
                     <div class="card-body">
                         <h3 class="h6">Edit basic Info</h3>
-                        <form action="{{route('user.update-name', $user->slug)}}" method="post">
+                        <form action="{{route('user_update_name',$user->slug)}}" method="post">
                             @csrf
                             @method('PATCH')
                             <div class="form-group row">
@@ -33,22 +33,39 @@
                             </div>
                         </form>
                         <hr>
+
                         <h3 class="h6">Update Email</h3>
-                        <form action="" method="post">
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    {{ $error }}
+                                @endforeach
+                            </div>
+                        @endif
+                        <form action="{{route('user_update_email', $user->slug)}}" method="post">
                             @csrf
+                            @method('PATCH')
                             <div class="form-group row">
-                                <label for="email" class="col-md-4 text-md-right col-form-label">Email</label>
+                                <label for="current_email" class="col-md-4 text-md-right col-form-label">Current Email</label>
 
                                 <div class="col-md-6">
-                                    <input type="email" name="email" class="form-control" value="{{$user->email}}">
+                                    <input type="current_email" name="current_email" class="form-control {{ $errors->first('current_email') ? 'is-invalid' : '' }}" placeholder="Current Email">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="email_confirmed" class="col-md-4 text-md-right col-form-lable">Confirm Email</label>
+                                <label for="email" class="col-md-4 text-md-right col-form-label">New Email</label>
 
                                 <div class="col-md-6">
-                                    <input type="email" name="email_confirmed" id="email_confirmed" class="form-control" placeholder="Verify new email address">
+                                    <input type="email" name="email" id="email" placeholder="New Email" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="email_confirmation" class="col-md-4 text-md-right col-form-lable">Confirm Email</label>
+
+                                <div class="col-md-6">
+                                    <input type="email" name="email_confirmation" id="email_confirmation" class="form-control" placeholder="Verify new email address">
                                 </div>
                             </div>
 

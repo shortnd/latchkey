@@ -23,7 +23,8 @@ Route::group(['prefix' => 'users', 'middleware' => 'role:superuser|admin'], func
 });
 Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
     Route::get('{user}/edit', 'UserController@edit')->name('user.edit');
-    Route::patch('{user}/update-name', 'UserController@updatedName')->name('user.update-name');
+    Route::patch('{user}/update-name', 'UserController@updatedName')->name('user_update_name');
+    Route::patch('{user}/update-email', 'UserController@updateEmail')->name('user_update_email');
 });
 Route::post('invitations', 'InvitationsController@store')->middleware('guest')->name('storeInvitation');
 
