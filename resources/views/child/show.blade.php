@@ -31,6 +31,15 @@
             @endif
             <div class="card mb-3">
                 <div class="card-header">
+                    Basic Contact Info
+                </div>
+                <div class="card-body">
+                    <h2>{{ $child->contact_name }} - {{$child->contact_relationship}} </h2>
+                    <h3 class="h6">Tel: <a href="tel:+1{{$child->contact_number}}">{{$child->contact_number}}</a></h3>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
                     Current Weeks Total
                     <br>
                     {{ today()->startOfWeek()->format('M d') }} - {{ today()->endOfWeek()->format('M d') }}

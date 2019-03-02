@@ -18,6 +18,9 @@ class CreateChildrenTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('slug')->unique();
+            $table->string('contact_name')->nullable();
+            $table->string('contact_relationship')->nullable();
+            $table->string('contact_number')->nullable();
             $table->timestamps();
         });
     }
