@@ -42,7 +42,8 @@ class ChildController extends Controller
     {
         $this->validate($request, [
             'first_name' => 'required',
-            'last_name' => 'required'
+            'last_name' => 'required',
+            'contact_number' => 'numeric|regex:/(01)[0-9]{9}/',
         ]);
 
         $child = new Child;
