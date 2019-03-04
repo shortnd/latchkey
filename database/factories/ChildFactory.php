@@ -8,6 +8,6 @@ $factory->define(App\Child::class, function (Faker $faker) {
         'last_name' => $faker->lastName,
         'contact_name' => $faker->firstName,
         'contact_relationship' => 'parent',
-        'contact_number' => $faker->phoneNumber
+        'contact_number' => $faker->phoneNumber('us')
     ];
 });

@@ -42,16 +42,14 @@
                                     <a href="{{ route('children.show', $child->slug) }}">{{ $child->first_name }} {{ $child->last_name }}</a>
                                 </td>
                                 <td>
-                                    {{-- {{ $child->checkins->first()->am_checkin}} --}}
                                     @if(!$child->checkins->first()->am_checkin)
                                     <form action="{{ route('am_checkin', $child->slug) }}" method="post">
                                         @csrf
                                         @method('PATCH')
                                         <label for="am_checkin">Check In &nbsp;
                                             <input type="checkbox" name="am_checkin" {{ $child->checkins->first()->am_checkin ? 'checked' : '' }}  {{ $child->checkins->first()->am_disabled() ? 'disabled': '' }} >
-                                            {{-- {{ $child->today_checkin->am_disabled() ? 'disabled' : '' }} --}}
                                         </label>
-                                        @signituremodal
+                                        {{-- @signituremodal --}}
                                     </form>
                                     @else
                                         Checked in at {{ $child->checkins->first()->amCheckinTime() }}

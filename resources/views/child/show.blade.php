@@ -35,7 +35,7 @@
                 </div>
                 <div class="card-body">
                     <h2>{{ $child->contact_name }} - {{$child->contact_relationship}} </h2>
-                    <h3 class="h6">Tel: <a href="tel:+1{{$child->contact_number}}">{{ phone($child->contact_number) }}</a></h3>
+                    <h3 class="h6">Tel: {{ $child->contact_number }}</h3>
                 </div>
             </div>
             <div class="card mb-3">
