@@ -32,6 +32,20 @@ class ChildController extends Controller
         return view('child.create');
     }
 
+    protected function contact_number($request, $child)
+    {
+        $this->validate($request, [
+            'contact_name' => 'required',
+            'contact_number' => 'numeric|regex:/[0-9]{9}/',
+            'contact_relationship' => 'required'
+        ]);
+        $child->contact_name = $request->contact_name;
+        $child->contact_number = $request->contact_number;
+        $child->contact_relationship = $request->contact_relationship;
+
+        return $child;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -43,12 +57,12 @@ class ChildController extends Controller
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
-            'contact_number' => 'numeric|regex:/(01)[0-9]{9}/',
         ]);
 
         $child = new Child;
         $child->first_name = $request->first_name;
         $child->last_name = $request->last_name;
+        $this->contact_number($request, $child);
 
         $child->save();
 
