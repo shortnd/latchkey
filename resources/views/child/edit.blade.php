@@ -2,7 +2,11 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ URL::previous() }}">Back</a>
+        <header>
+            <nav>
+                <a href="{{ URL::previous() }}">Back</a>
+            </nav>
+        </header>
         <br>
         <div class="card mb-3">
             <div class="card-header">
