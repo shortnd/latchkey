@@ -17,14 +17,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('id', '!=', Auth::user()->id)->get();
+        $users = User::where('slug', '!=', Auth::user()->slug)->get();
         return view('users.index')->withUsers($users);
     }
 
     public function edit(User $user)
     {
         // TODO: add a policy or find another way to check here
-        if($user->slug == auth()->user()->slug or auth()->user()->hasRole('superuser')) {
+        if($user->slug == auth()->user()->slug or auth()->user()->hasRole('superuser') or !$user->hasRole('superuser')) {
             return view('users.edit')->withUser($user);
         }
         return abort(403);
