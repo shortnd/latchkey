@@ -7,6 +7,13 @@
                 <a href="{{ URL::previous() }}">Back</a>
             </nav>
         </header>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                    {{$error}}
+                @endforeach
+            </div>
+        @endif
         <br>
         <div class="card mb-3">
             <div class="card-header">
@@ -42,7 +49,7 @@
                 Contact Info
             </div>
             <div class="card-body">
-                <form action="" method="post">
+                <form action="{{ route('update-contact', $child) }}" method="post">
                     @csrf
                     @method('PATCH')
 
@@ -59,6 +66,10 @@
                     <div class="form-group">
                         <label for="contact_relationship">Relationship</label>
                         <input type="text" name="contact_relationship" id="contact_relationship" class="form-control" value="{{$child->contact_relationship}}">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary">Update Contact Info</button>
                     </div>
                 </form>
             </div>

@@ -86,8 +86,6 @@ class ChildController extends Controller
             $query->whereBetween('created_at', [startOfWeek(), endOfWeek()])->first();
         }]);
 
-
-        // dd($child);
         return view('child.show')->withChild($child);
     }
 
@@ -99,10 +97,7 @@ class ChildController extends Controller
      */
     public function edit(Child $child)
     {
-        // if (auth()->user()->isA('superuser') || auth()->user()->isAn('admin')) {
         return view('child.edit')->withChild($child);
-        // }
-        // return back()->withErrors('Unauthorized');
     }
 
     /**
@@ -118,7 +113,13 @@ class ChildController extends Controller
             'first_name' => 'required|max:225',
             'last_name' => 'required|max:225'
         ]));
+        return back();
+    }
 
+    public function updateContact(Request $request, Child $child)
+    {
+        $this->contact_number($request, $child);
+        $child->update();
         return back();
     }
 

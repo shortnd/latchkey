@@ -29,9 +29,7 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {
 });
 
 Route::post('invitations', 'InvitationsController@store')->middleware('guest')->name('storeInvitation');
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')
-    ->name('register')
-    ->middleware('hasInvitation');
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register')->middleware('hasInvitation');
 
 Route::get('register/request', 'Auth\RegisterController@requestInvitation')->name('requestInvitation');
 // TODO Allow superuser/admin ability to add roles to new users
@@ -40,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Needs to be above resource route
     Route::get('children/weekly-totals', 'ChildController@weekly_totals')->name('weekly_totals');
     Route::resource('children', 'ChildController');
+    Route::patch('children/{child}/update-contract', 'ChildController@updateContact')->name('update-contact');
     Route::get('children/{child}/all-checkins', 'ChildController@all_checkins')->name('all_checkins');
     Route::post('add-day/{child}', 'ChildCheckinController@addNewCheckins')->name('add_child');
     Route::patch('am-checkin/{child}', 'ChildCheckinController@am_checkin')->name('am_checkin');
