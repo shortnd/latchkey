@@ -19,6 +19,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'users', 'middleware' => 'role:superuser|admin'], function() {
     Route::get('/', 'UserController@index');
     Route::get('register/invitations', 'InvitationsController@showRequestedInvitations')->name('showRequests');
+    Route::patch('{user}/add-roles', 'UserController@addRoleToUser')->name( 'addRoleToUser');
 });
 
 Route::group(['prefix' => 'users', 'middleware' => 'auth'], function() {

@@ -5,7 +5,14 @@
         <h2 class="text-center">Edit Account</h2>
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <div class="card">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif
+                <div class="card mb-3">
                     <div class="card-header">
                         {{ $user->name }}
                     </div>
@@ -116,6 +123,27 @@
                         </form>
                     </div>
                 </div>
+
+                @role('superuser|admin')
+                <div class="card">
+                    <div class="card-header">
+                        Add Role
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('addRoleToUser', $user) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <div class="form-group">
+                                <label for="admin"> <input type="checkbox" name="admin" id="admin" {{$user->hasRole('admin') ? 'checked' : ''}}> Admin</label>
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">Add Role(s)</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                @endrole
             </div>
         </div>
     </div>

@@ -6,15 +6,10 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    // Removing this because its now wrapped in web.php routes file
-    // public function __construct()
-    // {
-    //     $this->middleware('role:superuser|admin');
-    // }
-
     /**
      * Returns all users except for current logged in user
      *
@@ -75,6 +70,25 @@ class UserController extends Controller
         } else {
             $errors = array('current_password' => "Password did not match our records. Please try again later.");
             return redirect()->back()->withErrors($errors);
+        }
+    }
+
+    public function addRoleToUser(Request $request, User $user)
+    {
+        if (Auth::user()->hasRole('superuser') || Auth::user()->slug != $user->slug) {
+            $inputs = $request->only(['admin']);
+            foreach ($inputs as $key => $value) {
+                if ($user->hasRole($key)) {
+                    $user->removeRole($key);
+                } else {
+                    $role = Role::create(['name' => $key]);
+                    $user->assignRole($role);
+                }
+            }
+            return back();
+        } else {
+            $errors = array('Not Allowed' => "You are not allowed to change your role please contact Administrator.");
+            return back()->withErrors($errors);
         }
     }
 }
