@@ -49,6 +49,19 @@ class Child extends Model
         return $this->checkins()->whereDate('created_at', today())->first();
     }
 
+    public function today_total($today)
+    {
+        $total = 0;
+        if ($today->am_checkin) {
+            $total += 5;
+        }
+        if ($today->pm_checkout_time) {
+            $pm_diff = Carbon::parse($today->pm_checkout_time)->diff(Carbon::parse($today->pm_checkin_time))->format('%H.%I');
+            $total += $pm_diff * 4;
+        }
+        return round($total);
+    }
+
     public function todayTotal()
     {
         $total = 0;
@@ -105,6 +118,11 @@ class Child extends Model
         $weekEnd = $now->endOfWeek()->format('Y-m-d H:i');
 
         return $this->checkins()->whereBetween('created_at', [$weekStart, $weekEnd])->orderBy('created_at', 'desc')->get();
+    }
+
+    public function pastDue()
+    {
+        return $this->checkin_totals()->where('created_at', '<', startOfWeek())->sum('total_amount');
     }
 
     public function addCheckin()

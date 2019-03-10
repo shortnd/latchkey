@@ -6,6 +6,7 @@ use App\Checkin;
 use App\Child;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\CheckinTotals;
 
 class ChildCheckinController extends Controller
 {
@@ -64,10 +65,12 @@ class ChildCheckinController extends Controller
             $pm_checkout->update(['pm_checkout_time' => Carbon::now(), 'pm_sig' => $request->sig]);
 
             $pm_diff = Carbon::parse($pm_checkout->pm_checkin_time)->diff($pm_checkout->pm_checkout_time)->format('%H.%I');
-            $rollingTotalHours = $checkinTotals->total_hours + $pm_diff;
+            $rollingTotalHours = round($checkinTotals->total_hours + $pm_diff);
 
             $pm_amount = $pm_diff * 4;
-            $rollingTotalAmount = $checkinTotals->total_amount + $pm_amount;
+            $rollingTotalAmount = round($checkinTotals->total_amount + $pm_amount);
+
+            // dd($pm_amount, $rollingTotalAmount, $rollingTotalHours);
 
             $checkinTotals->update([
                 'total_hours' => $rollingTotalHours,

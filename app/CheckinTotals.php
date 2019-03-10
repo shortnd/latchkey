@@ -12,4 +12,10 @@ class CheckinTotals extends Model
     {
         return $this->belongsTo(Child::class);
     }
+
+    // public function pastDue($child)
+    // {
+    //     $this->where('created_at')
+    //     // return
+    // }
 }

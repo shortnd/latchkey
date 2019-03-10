@@ -15,9 +15,12 @@ class ChildController extends Controller
      */
     public function index()
     {
+        // $children = Child::with(['checkins' => function($query) {
+        //     $query->whereDate('created_at', today());
+        // }])->orderBy('last_name')->get();
         $children = Child::with(['checkins' => function($query) {
             $query->whereDate('created_at', today());
-        }])->orderBy('last_name')->get();
+        }])->get();
 
         return view('child.index')->withChildren($children);
     }
@@ -80,11 +83,10 @@ class ChildController extends Controller
      */
     public function show(Child $child)
     {
-        $child->with(['checkins' => function($query) {
-            $query->whereDate('created_at', today())->first();
-        }])->with(['checkin_totals' => function($query) {
-            $query->whereBetween('created_at', [startOfWeek(), endOfWeek()])->first();
-        }]);
+        $child->checkins = $child->weeklyCheckins();
+        $child->today_checkin = $child->todaysCheckin();
+        $child->week_totals = $child->weeklyTotals();
+        $child->past_due = $child->pastDue();
 
         return view('child.show')->withChild($child);
     }
