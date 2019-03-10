@@ -28,13 +28,6 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="form-group row">
-                                <label class="col-md-4 text-md-right col-form-label">Username:</label>
-                                <div class="col-md-6">
-                                    <input type="text" name="username" id="username" value="{{$user->username}}" class="form-control" disabled>
-                                </div>
-                            </div> --}}
-
                             <div class="form-group text-right">
                                 <button class="btn btn-link" type="submit">Update</button>
                             </div>
@@ -125,6 +118,7 @@
                 </div>
 
                 @role('superuser|admin')
+                @if(Auth::user()->slug != $user->slug)
                 <div class="card">
                     <div class="card-header">
                         Add Role
@@ -143,6 +137,7 @@
                         </form>
                     </div>
                 </div>
+                @endif
                 @endrole
             </div>
         </div>
