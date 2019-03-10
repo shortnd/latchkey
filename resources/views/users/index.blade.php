@@ -6,8 +6,8 @@
             <div class="aside-background"></div><!--/.aside-background-->
             <aside class="col-md-3">
                 <h2>Users</h2>
-                <ul>
-                    <li><a href="{{route('showRequests')}}">View Requests</a></li>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="{{route('showRequests')}}">View Requests</a></l>
                 </ul>
             </aside>
             <section class="col-md-9">
