@@ -35,6 +35,16 @@
                     <h3 class="h6">Tel {{ $child->contact_number }}</h3>
                 </div>
             </div><!--/.card.mb-3-->
+            @if($child->past_due)
+            <div class="card mb-3 alert-danger">
+                <div class="card-header">
+                    Amount Past Due
+                </div>
+                <div class="card-body">
+                    <strong>Amount past due ${{$child->past_due}}</strong>
+                </div>
+            </div><!--/.card.mb-3.alert-danger-->
+            @endif
             <div class="card mb-3">
                 <div class="card-header">
                     Current Weeks Total
