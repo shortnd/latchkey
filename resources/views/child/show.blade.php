@@ -12,6 +12,7 @@
             @role('superuser|admin')
             <div class="container mb-3 d-flex justify-content-between align-items-center">
                 <a href="{{ route("children.edit", $child->slug) }}" class="btn btn-secondary">Edit</a>
+                <a href="{{ route("show-payment-form", $child->slug) }}" class="btn btn-primary">Make Payment</a>
                 <form class="form-inline" action="{{ route("children.destroy", $child->slug) }}" method="POST">
                     @csrf
                     @method("DELETE")

@@ -52,6 +52,11 @@ Route::group(['middleware' => 'auth'], function () {
     // Search for past checkins
     Route::get('{child}/search-form', 'ChildSearchController@index')->name('search-form');
     Route::get('{child}/search-form/results', 'ChildSearchController@show')->name('search-results');
+
+    // Payments
+    Route::get('{child}/payment', 'ChildPaymentController@showPaymentForm')->name('show-payment-form');
+    Route::patch('{child}/pay-past-due', 'ChildPaymentController@payPastDue')->name('pay-past-due');
+    Route::patch('{child}/pay-current-week', 'ChildPaymentController@payWeekTotal')->name('pay-current-week');
 });
 
 // Latchkey Policy & Contract pages
