@@ -39,7 +39,11 @@
                             @foreach($children as $child)
                             <tr>
                                 <td>
-                                    <a href="{{ route('children.show', $child->slug) }}">{{ $child->first_name }} {{ $child->last_name }}</a>
+                                    {{-- {{ $child->pastDue() }} --}}
+                                    <a href="{{ route('children.show', $child->slug) }}">{{ $child->fullName() }}</a>
+                                    @if(count($child->checkin_totals) > 0)
+                                    <small class="text-danger d-block">Past Due: ${{ $child->pastDue() }}</small>
+                                    @endif
                                 </td>
                                 <td>
                                     @if(!$child->checkins->first()->am_checkin)

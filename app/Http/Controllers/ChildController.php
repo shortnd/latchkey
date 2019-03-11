@@ -15,13 +15,20 @@ class ChildController extends Controller
      */
     public function index()
     {
-        // $children = Child::with(['checkins' => function($query) {
-        //     $query->whereDate('created_at', today());
-        // }])->orderBy('last_name')->get();
         $children = Child::with(['checkins' => function($query) {
             $query->whereDate('created_at', today());
-        }])->get();
+        }])->with(['checkin_totals' => function($query) {
+            $query->where('created_at', '<', startOfWeek())->where('total_amount', '>', 0)->sum('total_amount');
+        }])->orderBy('last_name')->get();
 
+        // $children = Child::with(['checkins' => function($query) {
+        //     $query->whereDate('created_at', today());
+        // }])->get();
+
+        // foreach($children as $child) {
+        //     $child->past_due = $child->pastDue();
+        // }
+        // return $children;
         return view('child.index')->withChildren($children);
     }
 
