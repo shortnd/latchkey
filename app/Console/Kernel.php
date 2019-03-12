@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\DailyChildCheckins;
+use App\Console\Commands\AddLateFee;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,8 +27,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('children:dailytable')->weekdays()->dailyAt('00:01');
-        $schedule->command('children:latefee')->weekdays()->between('18:00', '18:30')->everyTenMinutes();
+        // $schedule->command('children:dailytable')->weekdays()->dailyAt('00:01');
+        // $schedule->command('children:latefee')->weekdays()->between('18:00', '18:30')->everyTenMinutes();
+        $schedule->command(DailyChildCheckins::class)->weekdays()->daily();
+        $schedule->command(AddLateFee::class)->weekdays()->between('18:00', '18:30')->everyTenMinutes();
     }
 
     /**
