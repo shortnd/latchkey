@@ -35,14 +35,16 @@ class ChildController extends Controller
 
     protected function contact_number($request, $child)
     {
-        $this->validate($request, [
-            'contact_name' => 'required',
-            'contact_number' => 'numeric|regex:/[0-9]{9}/',
-            'contact_relationship' => 'required'
-        ]);
-        $child->contact_name = $request->contact_name;
-        $child->contact_number = $request->contact_number;
-        $child->contact_relationship = $request->contact_relationship;
+        if($request->contact_name) {
+            $this->validate($request, [
+                'contact_name' => 'required',
+                'contact_number' => 'numeric|regex:/[0-9]{9}/',
+                'contact_relationship' => 'required'
+            ]);
+            $child->contact_name = $request->contact_name;
+            $child->contact_number = $request->contact_number;
+            $child->contact_relationship = $request->contact_relationship;
+        }
 
         return $child;
     }
