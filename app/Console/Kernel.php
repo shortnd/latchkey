@@ -13,8 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\DailyChildCheckins',
-        'App\Console\Commands\AddLateFee'
+        \App\Console\Commands\DailyChildCheckins::class,
+        \App\Console\Commands\AddLateFee::class
     ];
 
     /**
@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('children:dailytable')->weekdays()->daily();
+        $schedule->command('children:dailytable')->weekdays()->everyMinute();
         $schedule->command('children:latefee')->weekdays()->between('18:00', '18:30')->everyTenMinutes();
     }
 
