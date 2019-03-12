@@ -35,7 +35,7 @@ class ChildController extends Controller
 
     protected function contact_number($request, $child)
     {
-        if($request->contact_name) {
+        if($request->contact_number) {
             $this->validate($request, [
                 'contact_name' => 'required',
                 'contact_number' => 'numeric|regex:/[0-9]{9}/',
