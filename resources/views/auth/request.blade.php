@@ -26,6 +26,8 @@
                         <form action="{{ route('storeInvitation') }}" method="POST" class="form mt-3">
                             {{ csrf_field() }}
 
+                            <input type="hidden" name="hidden" aria-placeholder="Do not fill out this feild">
+
                             <div class="form-group row {{$errors->has('email') ? 'has-error' : ''}}">
                                 <label
                                     for="email"

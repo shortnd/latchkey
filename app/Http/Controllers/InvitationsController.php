@@ -15,6 +15,9 @@ class InvitationsController extends Controller
     }
     public function store(StoreInvitationRequest $request)
     {
+        if($request->get('hidden')) {
+            return abort(403);
+        }
         $invitation = new Invitation($request->only('email'));
         $invitation->generateInvitationToken();
         $invitation->save();
