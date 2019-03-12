@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('children:dailytable')->weekdays()->everyMinute();
+        $schedule->command('children:dailytable')->weekdays()->daily();
         $schedule->command('children:latefee')->weekdays()->between('18:00', '18:30')->everyTenMinutes();
     }
 
