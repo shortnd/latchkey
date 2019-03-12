@@ -60,8 +60,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // Latchkey Policy & Contract pages
-Route::group(['prefix' => 'policy'], function () {
-    Route::get('', 'PolicyController@index');
-    Route::get('edit', 'PolicyController@edit');
-    Route::put('', 'PolicyController@update');
-});
+// Route::group(['prefix' => 'policy'], function () {
+//     Route::get('', 'PolicyController@index');
+//     Route::get('edit', 'PolicyController@edit');
+//     Route::put('', 'PolicyController@update');
+// });
