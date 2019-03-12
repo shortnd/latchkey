@@ -37,8 +37,8 @@ class UserController extends Controller
         ]);
 
         $user->update(['name' => $request->name]);
-
-        return redirect()->back();
+        $success = "Your name was successfuly updated!";
+        return redirect()->back()->withName($success);
     }
 
     public function updateEmail(Request $request, User $user)
@@ -50,7 +50,8 @@ class UserController extends Controller
 
         if($user->email === $request->current_email) {
             $user->update(['email' => $request->email]);
-            return redirect()->back();
+            $success = "Your email was succefully updated!";
+            return redirect()->back()->withEmail($success);
         } else {
             $errors = array('email' => 'Email did not match our records. Please try again');
             return redirect()->back()->withErrors($errors);
@@ -66,7 +67,8 @@ class UserController extends Controller
 
         if (Hash::check($request->current_password, $user->password)) {
             $user->update(['password' => Hash::make($request->password)]);
-            return redirect()->back();
+            $success = "Your password was succefully updated!";
+            return redirect()->back()->withPassword($success);
         } else {
             $errors = array('current_password' => "Password did not match our records. Please try again later.");
             return redirect()->back()->withErrors($errors);
@@ -85,7 +87,8 @@ class UserController extends Controller
                     $user->assignRole($role);
                 }
             }
-            return back();
+            $success = "Role added to user";
+            return back()->withRole($success);
         } else {
             $errors = array('Not Allowed' => "You are not allowed to change your role please contact Administrator.");
             return back()->withErrors($errors);

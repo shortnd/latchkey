@@ -18,6 +18,14 @@
                     </div>
                     <div class="card-body">
                         <h3 class="h6">Edit basic Info</h3>
+                        @if(session()->has('name'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session()->get('name')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
                         <form action="{{route('user_update_name',$user->slug)}}" method="post">
                             @csrf
                             @method('PATCH')
@@ -41,6 +49,14 @@
                                     {{ $error }}
                                 @endforeach
                             </div>
+                        @endif
+                        @if(session()->has("email"))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session()->get("email") }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         @endif
                         <form action="{{route('user_update_email', $user->slug)}}" method="post">
                             @csrf
@@ -81,6 +97,14 @@
                             @foreach ($errors->all() as $error)
                             {{ $error }}
                             @endforeach
+                        </div>
+                        @endif
+                        @if(session()->has("password"))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session()->get("password") }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         @endif
                         <form action="{{route('user_update_password', $user->slug)}}" method="post">
@@ -124,6 +148,14 @@
                         Add Role
                     </div>
                     <div class="card-body">
+                        @if(session()->has("role"))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session()->get("role") }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
                         <form action="{{ route('addRoleToUser', $user) }}" method="POST">
                             @csrf
                             @method('PATCH')
