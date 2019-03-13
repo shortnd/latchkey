@@ -2,10 +2,10 @@
 
 namespace App\Console;
 
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\DailyChildCheckins;
 use App\Console\Commands\AddLateFee;
+use Illuminate\Console\Scheduling\Schedule;
+use App\Console\Commands\DailyChildCheckins;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
