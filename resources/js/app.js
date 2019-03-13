@@ -34,24 +34,26 @@ const app = new Vue({
     el: '#app',
 });
 
-const am_checkboxes = document.querySelectorAll('input[name^="am_checkin"]');
-const pm_checkboxes = document.querySelectorAll('input[name^="pm_checkout"]');
-const body = document.querySelector('body');
+const am_checkboxes = $('input[name^="am_checkin"]');
+const pm_checkboxes = $('input[name^="pm_checkout"]');
+const body = $('body');
 
 function sigModal(checkboxes) {
-    checkboxes.forEach(checkbox => {
-        const modal = checkbox.parentElement.parentElement.querySelector('.sig-modal');
-        const canvas = modal.querySelector('canvas');
-        const sigPad = new SignaturePad(canvas, {penColor: "#333",backgroundColor: "#fff"});
-        const close = modal.querySelector('.close');
-        const submit = modal.querySelector('button[type^="submit"]');
+    checkboxes.each(function() {
+        const modal = $(this).parent().parent().find('.sig-modal');
+        const canvas = modal.find('canvas');
+        if (canvas.length) {
+            const sigPad = new SignaturePad(canvas, {penColor: "#333",backgroundColor: "#fff"});
+        }
+        const close = modal.find('.close');
+        const submit = modal.find('button[type^="submit"]');
 
-        const openModal = () => {
+        const openModal = function() {
             modal.classList.add('active');
             body.classList.add('modal-open');
         };
 
-        const closeModal = (event) => {
+        const closeModal = function(event) {
             if (event.key == "escape" || event.type == "click") {
                 modal.classList.remove('active');
                 body.classList.remove('modal-open');
@@ -60,7 +62,7 @@ function sigModal(checkboxes) {
             }
         };
 
-        const submitSig = (event) => {
+        const submitSig = function(event) {
             const sigInput = modal.querySelector('input[name^="sig"]');
             if (!sigPad.isEmpty()) {
                 sigInput.value = sigPad.toDataURL("image/jpeg");
@@ -71,9 +73,9 @@ function sigModal(checkboxes) {
             }
         };
 
-        checkbox.addEventListener('click', openModal);
-        close.addEventListener('click', closeModal);
-        submit.addEventListener('click', submitSig);
+        $(this).on('click', openModal);
+        close.on('click', closeModal);
+        submit.on('click', submitSig);
     });
 }
 

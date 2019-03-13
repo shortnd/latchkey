@@ -73108,22 +73108,24 @@ files.keys().map(function (key) {
 var app = new Vue({
   el: '#app'
 });
-var am_checkboxes = document.querySelectorAll('input[name^="am_checkin"]');
-var pm_checkboxes = document.querySelectorAll('input[name^="pm_checkout"]');
-var body = document.querySelector('body');
+var am_checkboxes = $('input[name^="am_checkin"]');
+var pm_checkboxes = $('input[name^="pm_checkout"]');
+var body = $('body');
 
 function sigModal(checkboxes) {
-  var _this = this;
+  checkboxes.each(function () {
+    var modal = $(this).parent().parent().find('.sig-modal');
+    var canvas = modal.find('canvas');
 
-  checkboxes.forEach(function (checkbox) {
-    var modal = checkbox.parentElement.parentElement.querySelector('.sig-modal');
-    var canvas = modal.querySelector('canvas');
-    var sigPad = new signature_pad__WEBPACK_IMPORTED_MODULE_0__["default"](canvas, {
-      penColor: "#333",
-      backgroundColor: "#fff"
-    });
-    var close = modal.querySelector('.close');
-    var submit = modal.querySelector('button[type^="submit"]');
+    if (canvas.length) {
+      var _sigPad = new signature_pad__WEBPACK_IMPORTED_MODULE_0__["default"](canvas, {
+        penColor: "#333",
+        backgroundColor: "#fff"
+      });
+    }
+
+    var close = modal.find('.close');
+    var submit = modal.find('button[type^="submit"]');
 
     var openModal = function openModal() {
       modal.classList.add('active');
@@ -73147,20 +73149,14 @@ function sigModal(checkboxes) {
 
         if (sigInput.value > 0) {
           console.log(sigInput.value.length);
-
-          _this.form.submit();
+          this.form.submit();
         }
-      } //  else {
-      //     event.preventDefault();
-      //     alert('Please Sign to Checkin Child');
-      //     checkbox.checked = false;
-      // }
-
+      }
     };
 
-    checkbox.addEventListener('click', openModal);
-    close.addEventListener('click', closeModal);
-    submit.addEventListener('click', submitSig);
+    $(this).on('click', openModal);
+    close.on('click', closeModal);
+    submit.on('click', submitSig);
   });
 }
 
