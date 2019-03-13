@@ -18,7 +18,7 @@ class CreateCheckinsTable extends Migration
             $table->unsignedInteger('child_id');
             $table->boolean('am_checkin')->default(0);
             $table->boolean('pm_checkin')->default(0);
-            $table->text('am_sig')->nullable();
+            // $table->text('am_sig')->nullable();
             $table->text('pm_sig')->nullable();
             // Add late fees here??
             $table->integer('late_fee')->default(0)->max(3);

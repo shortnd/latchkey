@@ -51,7 +51,7 @@
                                         @csrf
                                         @method('PATCH')
                                         <label for="am_checkin">Check In &nbsp;
-                                            <input type="checkbox" name="am_checkin" {{ $child->checkins->first()->am_checkin ? 'checked' : '' }}  {{ $child->checkins->first()->am_disabled() ? 'disabled': '' }} >
+                                            <input type="checkbox" name="am_checkin" {{ $child->checkins->first()->am_checkin ? 'checked' : '' }}  {{ $child->checkins->first()->am_disabled() ? 'disabled': '' }} onchange="this.form.submit()">
                                         </label>
                                         {{-- @signituremodal --}}
                                     </form>
