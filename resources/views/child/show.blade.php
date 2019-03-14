@@ -115,7 +115,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if(!$child->today_checkin->pm_checkout_time)
+                                    @if(!$child->today_checkin->pm_checkout_time && $child->today_checkin->pm_checkin_time)
                                     <strong>Student still in latchkey</strong>
                                     <form action="{{ route("pm_checkout", $child->slug) }}" method="POST">
                                         @csrf
