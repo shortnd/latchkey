@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Child;
 
 class ChildWeekTotal extends Mailable
 {
@@ -16,9 +17,9 @@ class ChildWeekTotal extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Child $child)
     {
-        //
+        $this->child = $child;
     }
 
     /**
@@ -28,6 +29,8 @@ class ChildWeekTotal extends Mailable
      */
     public function build()
     {
-        return $this->markdown('childweektotal');
+        return $this->view('emails.child.totals')->with([
+            'checkin_totals' => $this->child->weeklyTotals()
+        ]);
     }
 }
