@@ -12,7 +12,7 @@ class AddLateFee extends Command
      *
      * @var string
      */
-    protected $signature = 'children:latefee';
+    protected $signature = 'children-latefee';
 
     /**
      * The console command description.
@@ -38,13 +38,13 @@ class AddLateFee extends Command
      */
     public function handle()
     {
-        $children = Child::with(['checkins' => function($query){
+        $children = Child::with(['checkins' => function ($query) {
                 $query->whereDate('created_at', today());
-            }])->with(['checkin_totals' => function($query){
+        }])->with(['checkin_totals' => function ($query) {
                 $query->whereBetween('created_at', [startOfWeek(), endOfWeek()]);
-            }])->get();
+        }])->get();
 
-        $children->map(function($child) {
+        $children->map(function ($child) {
             if ($child->checkins->first()->pm_checkin_time !== null && $child->checkins->first()->pm_checkout_time === null) {
                 $late_fee = $child->checkins->first()->late_fee + 1;
                 $total_amount = $child->checkin_totals->first()->total_amount + 10;
@@ -56,17 +56,7 @@ class AddLateFee extends Command
                 ]);
             }
         });
-        // foreach ($children as $child) {
-        //     if($child->checkins->first()->pm_checkin_time !== null && $child->checkins->first()->pm_checkout_time === null) {
-        //         $late_fee = $child->checkins->first()->late_fee + 1;
-        //         $total_amount = $child->checkin_totals->first()->total_amount + 10;
-        //         $child->todaysCheckin()->update([
-        //             'late_fee' => $late_fee
-        //         ]);
-        //         $child->weeklyTotals()->update([
-        //             'total_amount' => $total_amount
-        //         ]);
-        //     }
-        // }
+
+        $this->comment('Late Fees Added');
     }
 }

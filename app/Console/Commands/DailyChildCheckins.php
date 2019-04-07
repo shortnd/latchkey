@@ -12,7 +12,7 @@ class DailyChildCheckins extends Command
      *
      * @var string
      */
-    protected $signature = 'children:dailytable';
+    protected $signature = 'children-daily-table';
 
     /**
      * The console command description.
@@ -42,5 +42,7 @@ class DailyChildCheckins extends Command
             $child->addCheckin();
             $child->addWeeklyTotal();
         });
+
+        $this->comment('Daily Tabled add to Children');
     }
 }
